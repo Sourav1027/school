@@ -3,7 +3,6 @@ import RegForm from "@/components/partials/auth/reg-form";
 import Image from "next/image";
 import Copyright from "@/components/partials/auth/copyright";
 import Logo from "@/components/partials/auth/logo";
-import Social from "@/components/partials/auth/social";
 const Register = () => {
   return (
     <>
@@ -17,13 +16,6 @@ const Register = () => {
               <Link href="/" className="mb-6 inline-block">
                 <Logo />
               </Link>
-
-              <h4>
-                Unlock your Project
-                <span className="text-default-800  font-bold ms-2">
-                  performance
-                </span>
-              </h4>
             </div>
             <div className="absolute left-0 bottom-[-130px] h-full w-full z-[-1]">
               <Image
@@ -43,21 +35,14 @@ const Register = () => {
                     <Logo />
                   </Link>
                 </div>
-                <div className="text-center 2xl:mb-10 mb-5">
+                <div className="text-center 2xl:mb-5 mb-5">
                   <h4 className="font-medium">Sign up</h4>
                   <div className="text-default-500  text-base">
-                    Create an account to start using Dashcode
+                    Create an Account 
                   </div>
                 </div>
                 <RegForm />
-                <div className=" relative border-b-[#9AA2AF] border-opacity-[16%] border-b pt-6">
-                  <div className=" absolute inline-block  bg-default-50 dark:bg-default-100 left-1/2 top-1/2 transform -translate-x-1/2 px-4 min-w-max text-sm  text-default-500  font-normal ">
-                    Or continue with
-                  </div>
-                </div>
-                <div className="max-w-[242px] mx-auto mt-8 w-full">
-                  <Social locale={""} />
-                </div>
+               
                 <div className="max-w-[225px] mx-auto font-normal text-default-500  2xl:mt-12 mt-6 uppercase text-sm">
                   Already registered?
                   <Link

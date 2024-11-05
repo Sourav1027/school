@@ -1,32 +1,19 @@
 import createMiddleware from 'next-intl/middleware';
-import {NextRequest, NextResponse} from 'next/server';
+import {NextRequest} from 'next/server';
 import {locales} from '@/config';
 
-export default async function middleware(request: NextRequest) {
-  
- 
-
-
-  // Step 1: Use the incoming request (example)
+export default function middleware(request: NextRequest) {
   const defaultLocale = request.headers.get('dashcode-locale') || 'en';
- 
-  // Step 2: Create and call the next-intl middleware (example)
-  const handleI18nRouting = createMiddleware({
-    locales,
-    defaultLocale
-    
-  });
-  const response = handleI18nRouting(request);
- 
-  // Step 3: Alter the response (example)
-  response.headers.set('dashcode-locale', defaultLocale);
-
-
- 
-  return response;
+  
+  return createMiddleware({
+    locales: locales,
+    defaultLocale: defaultLocale,
+    // Add this to ensure locales are always in the URL
+    localePrefix: 'always'
+  })(request);
 }
- 
+
 export const config = {
-  // Match only internationalized pathnames
-  matcher: ['/', '/(ar|en)/:path*']
+  // Fix the matcher pattern
+  matcher: ['/((?!api|_next|.*\\..*).*)']
 };

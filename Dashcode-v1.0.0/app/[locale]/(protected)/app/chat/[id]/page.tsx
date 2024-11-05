@@ -198,6 +198,13 @@ const ChatPageSingle = async ({ params: { id } }: { params: { id: string }; }) =
                         </div>
                         <div className="font-medium">English</div>
                     </li>
+                    <li className="flex justify-between text-sm text-default-600 ">
+                        <div className="flex gap-2 items-start ">
+                            <Icon icon="heroicons-outline:translate" className="text-base" />
+                            <span>Language</span>
+                        </div>
+                        <div className="font-medium">Hindi</div>
+                    </li>
                 </ul>
                 <ul className="mt-5 px-6 space-y-4 border-b border-default-200  pb-5 ">
                     {socials?.map((slink, sindex) => (

@@ -51,56 +51,38 @@ export function getMenuList(pathname: string, t: any): Group[] {
               icon: "heroicons:arrow-trending-up",
               children: [],
             },
-            {
-              href: "/dashboard/dash-ecom",
-              label: t("ecommerce"),
-              active: pathname === "/dashboard/dash-ecom",
-              icon: "heroicons:shopping-cart",
-              children: [],
-            },
-            {
-              href: "/dashboard/project",
-              label: t("project"),
-              active: pathname === "/dashboard/project",
-              icon: "heroicons:document",
-              children: [],
-            },
-            {
-              href: "/dashboard/crm",
-              label: t("crm"),
-              active: pathname === "/dashboard/crm",
-              icon: "heroicons:share",
-              children: [],
-            },
-            {
-              href: "/dashboard/banking",
-              label: t("banking"),
-              active: pathname === "/dashboard/banking",
-              icon: "heroicons:credit-card",
-              children: [],
-            },
+            // {
+            //   href: "/dashboard/dash-ecom",
+            //   label: t("ecommerce"),
+            //   active: pathname === "/dashboard/dash-ecom",
+            //   icon: "heroicons:shopping-cart",
+            //   children: [],
+            // },
+            // {
+            //   href: "/dashboard/project",
+            //   label: t("project"),
+            //   active: pathname === "/dashboard/project",
+            //   icon: "heroicons:document",
+            //   children: [],
+            // },
+            // {
+            //   href: "/dashboard/crm",
+            //   label: t("crm"),
+            //   active: pathname === "/dashboard/crm",
+            //   icon: "heroicons:share",
+            //   children: [],
+            // },
+           
           ],
         },
       ],
-    },
-    {
-      groupLabel: "",
-      id: "changelog",
-      menus: [
-        {
-          id: "changelog",
-          href: "/changelog",
-          label: t("changelog"),
-          active: pathname.includes("/changelog"),
-          icon: "heroicons:arrow-trending-up",
-          submenus: [],
-        },
-      ],
-    },
+    } ,
+   
+  
     {
       groupLabel: t("apps"),
       id: "app",
-      menus: [
+      menus: [ 
         {
           id: "chat",
           href: "/app/chat",
@@ -142,6 +124,14 @@ export function getMenuList(pathname: string, t: any): Group[] {
           submenus: [],
         },
         {
+          id: "role",
+          href: "/app/role",
+          label: t("role"),
+          active:pathname.includes("/app/role"),
+          icon: "heroicons-outline:user-plus",
+          submenus: [],
+        },
+        {
           id: "projects",
           href: "/app/projects",
           label: t("projects"),
@@ -151,99 +141,99 @@ export function getMenuList(pathname: string, t: any): Group[] {
         },
       ],
     },
-    {
-      groupLabel: "",
-      id: "ecommerce",
-      menus: [
-        {
-          id: "ecommerce",
-          href: "/ecommerce/frontend",
-          label: t("ecommerce"),
-          active: pathname.includes("/ecommerce"),
-          icon: "heroicons-outline:shopping-bag",
-          submenus: [
-            {
-              href: "/ecommerce/frontend",
-              label: t("userApp"),
-              active: pathname.includes("/ecommerce/frontend"),
-              icon: "heroicons-outline:user",
-              children: [
-                {
-                  href: "/ecommerce/frontend",
-                  label: t("products"),
-                  active: pathname === "/ecommerce/frontend",
-                },
-                {
-                  href: "/ecommerce/frontend/c06d48bf-7f35-4789-b71e-d80fee5b430t",
-                  label: t("productDetails"),
-                  active:
-                    pathname ===
-                    "/ecommerce/frontend/c06d48bf-7f35-4789-b71e-d80fee5b430t",
-                },
-                {
-                  href: "/ecommerce/frontend/checkout/cart",
-                  label: t("cart"),
-                  active: pathname === "/ecommerce/frontend/checkout/cart",
-                },
-                {
-                  href: "/ecommerce/frontend/wishlist",
-                  label: t("wishlist"),
-                  active: pathname === "/ecommerce/frontend/wishlist",
-                },
-              ],
-            },
-            {
-              href: "/ecommerce/backend",
-              label: t("adminApp"),
-              active: pathname.includes("/ecommerce/backend"),
-              icon: "heroicons-outline:user-circle",
-              children: [
-                {
-                  href: "/ecommerce/backend/add-product",
-                  label: t("addProduct"),
-                  active: pathname === "/ecommerce/backend/add-product",
-                },
-                {
-                  href: "/ecommerce/backend/customer-list",
-                  label: t("customerList"),
-                  active: pathname === "/ecommerce/backend/customer-list",
-                },
-                {
-                  href: "/ecommerce/backend/edit-product",
-                  label: t("editProduct"),
-                  active: pathname === "/ecommerce/backend/edit-product",
-                },
-                {
-                  href: "/ecommerce/backend/invoice",
-                  label: t("invoice"),
-                  active: pathname === "/ecommerce/backend/invoice",
-                },
-                {
-                  href: "/ecommerce/backend/order-details",
-                  label: t("orderDetails"),
-                  active: pathname === "/ecommerce/backend/order-details",
-                },
-                {
-                  href: "/ecommerce/backend/order-list",
-                  label: t("orderList"),
-                  active: pathname === "/ecommerce/backend/order-list",
-                },
-                {
-                  href: "/ecommerce/backend/purchase-list",
-                  label: t("purchaseList"),
-                  active: pathname === "/ecommerce/backend/purchase-list",
-                },
-                {
-                  href: "/ecommerce/backend/sellers",
-                  label: t("sellers"),
-                  active: pathname === "/ecommerce/backend/sellers",
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
+    // {
+    //   groupLabel: "",
+    //   id: "ecommerce",
+    //   menus: [
+    //     {
+    //       id: "ecommerce",
+    //       href: "/ecommerce/frontend",
+    //       label: t("ecommerce"),
+    //       active: pathname.includes("/ecommerce"),
+    //       icon: "heroicons-outline:shopping-bag",
+    //       submenus: [
+    //         {
+    //           href: "/ecommerce/frontend",
+    //           label: t("userApp"),
+    //           active: pathname.includes("/ecommerce/frontend"),
+    //           icon: "heroicons-outline:user",
+    //           children: [
+    //             {
+    //               href: "/ecommerce/frontend",
+    //               label: t("products"),
+    //               active: pathname === "/ecommerce/frontend",
+    //             },
+    //             {
+    //               href: "/ecommerce/frontend/c06d48bf-7f35-4789-b71e-d80fee5b430t",
+    //               label: t("productDetails"),
+    //               active:
+    //                 pathname ===
+    //                 "/ecommerce/frontend/c06d48bf-7f35-4789-b71e-d80fee5b430t",
+    //             },
+    //             {
+    //               href: "/ecommerce/frontend/checkout/cart",
+    //               label: t("cart"),
+    //               active: pathname === "/ecommerce/frontend/checkout/cart",
+    //             },
+    //             {
+    //               href: "/ecommerce/frontend/wishlist",
+    //               label: t("wishlist"),
+    //               active: pathname === "/ecommerce/frontend/wishlist",
+    //             },
+    //           ],
+    //         },
+    //         {
+    //           href: "/ecommerce/backend",
+    //           label: t("adminApp"),
+    //           active: pathname.includes("/ecommerce/backend"),
+    //           icon: "heroicons-outline:user-circle",
+    //           children: [
+    //             {
+    //               href: "/ecommerce/backend/add-product",
+    //               label: t("addProduct"),
+    //               active: pathname === "/ecommerce/backend/add-product",
+    //             },
+    //             {
+    //               href: "/ecommerce/backend/customer-list",
+    //               label: t("customerList"),
+    //               active: pathname === "/ecommerce/backend/customer-list",
+    //             },
+    //             {
+    //               href: "/ecommerce/backend/edit-product",
+    //               label: t("editProduct"),
+    //               active: pathname === "/ecommerce/backend/edit-product",
+    //             },
+    //             {
+    //               href: "/ecommerce/backend/invoice",
+    //               label: t("invoice"),
+    //               active: pathname === "/ecommerce/backend/invoice",
+    //             },
+    //             {
+    //               href: "/ecommerce/backend/order-details",
+    //               label: t("orderDetails"),
+    //               active: pathname === "/ecommerce/backend/order-details",
+    //             },
+    //             {
+    //               href: "/ecommerce/backend/order-list",
+    //               label: t("orderList"),
+    //               active: pathname === "/ecommerce/backend/order-list",
+    //             },
+    //             {
+    //               href: "/ecommerce/backend/purchase-list",
+    //               label: t("purchaseList"),
+    //               active: pathname === "/ecommerce/backend/purchase-list",
+    //             },
+    //             {
+    //               href: "/ecommerce/backend/sellers",
+    //               label: t("sellers"),
+    //               active: pathname === "/ecommerce/backend/sellers",
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // },
     {
       groupLabel: t("pages"),
       id: "auth",
@@ -1320,6 +1310,14 @@ export function getHorizontalMenuList(pathname: string, t: any): Group[] {
               icon: "heroicons-outline:clipboard-check",
               children: [],
             },
+            //============================================================================
+            {
+              href: "/app/role",
+              label: t("role"),
+              active: pathname === "/app/role",
+              icon: "heroicons-outline:user-plus",
+              children: [],
+            },
             {
               href: "/app/projects",
               label: t("projects"),
@@ -1327,6 +1325,7 @@ export function getHorizontalMenuList(pathname: string, t: any): Group[] {
               icon: "heroicons-outline:document",
               children: [],
             },
+            
           ],
         },
       ],

@@ -17,7 +17,7 @@ const SidebarNav = ({ menuList }: { menuList: Group[] }) => {
   const [config, setConfig] = useConfig()
   const pathname = usePathname();
   const params = useParams<{ locale: string; }>();
-  const direction = getLangDir(params?.locale ?? '');
+  const direction = getLangDir(params?.locale ?? ''); 
   const activeKey = pathname?.split('/')?.[2];
   const data = menuList.find(item => item.id === activeKey);
 
@@ -25,8 +25,6 @@ const SidebarNav = ({ menuList }: { menuList: Group[] }) => {
   if (config.subMenu || !config.hasSubMenu) {
     return null;
   }
-
-
 
 
   return (
