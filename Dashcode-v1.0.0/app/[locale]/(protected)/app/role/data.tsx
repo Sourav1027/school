@@ -8,6 +8,8 @@ interface TableData {
   
   import React, { useState, useEffect } from 'react';
   import { Pencil, Trash2 } from 'lucide-react';
+  const apiurl = process.env.NEXT_PUBLIC_SITE_URL;
+ console.log(apiurl,"api")
   
   const Data: React.FC = () => {
     const [data, setData] = useState<TableData[]>([]);
@@ -17,18 +19,28 @@ interface TableData {
       fetchData();
     }, []);
   
+    const [error, setError] = useState<string | null>(null);
+
     const fetchData = async (): Promise<void> => {
       try {
-        // Replace with your API endpoint
-        const response = await fetch('YOUR_API_ENDPOINT');
+        const response = await fetch(`${apiurl}v1/role`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhZDczOWI5MC04ODUyLTQ5YTctYTg5Yy0zMGFjNmI4MWRmNzYiLCJ1c2VybmFtZSI6ImpvaG5kb2VkIiwic2Nob29sSWQiOjEwMSwiaWF0IjoxNzMwOTAwNDEzLCJleHAiOjE3MzA5ODY4MTN9.QAXAV73UnUiYKguLeXvav3bDgv7WDRo9ct_zqXmOUt8`,
+            'Content-Type': 'application/json',
+          },
+        });
+        if (!response.ok) throw new Error('Failed to fetch data');
         const result = await response.json();
         setData(result);
-        setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
+        setError('Failed to load data');
+      } finally {
         setLoading(false);
       }
     };
+     
   
     const handleEdit = (id: number): void => {
       console.log('Edit clicked for id:', id);
@@ -43,7 +55,11 @@ interface TableData {
     if (loading) {
       return (
         <div className="flex justify-center items-center h-screen">
-          <div className="text-xl font-semibold">Loading...</div>
+          {error ? (
+            <div className="text-xl font-semibold text-red-500">{error}</div>
+          ) : (
+            <div className="text-xl font-semibold">Loading...</div>
+          )}
         </div>
       );
     }

@@ -132,6 +132,22 @@ export function getMenuList(pathname: string, t: any): Group[] {
           submenus: [],
         },
         {
+          id: "school",
+          href: "/app/school",
+          label: t("school"),
+          active:pathname.includes("/app/school"),
+          icon: "heroicons-outline:building-office-2",
+          submenus: [],
+        },
+        {
+          id: "teacher",
+          href: "/app/teacher",
+          label: t("teacher"),
+          active:pathname.includes("/app/teacher"),
+          icon: "heroicons-outline:academic-cap",
+          submenus: [],
+        },
+        {
           id: "projects",
           href: "/app/projects",
           label: t("projects"),
@@ -141,6 +157,8 @@ export function getMenuList(pathname: string, t: any): Group[] {
         },
       ],
     },
+    
+
     // {
     //   groupLabel: "",
     //   id: "ecommerce",
@@ -1316,6 +1334,20 @@ export function getHorizontalMenuList(pathname: string, t: any): Group[] {
               label: t("role"),
               active: pathname === "/app/role",
               icon: "heroicons-outline:user-plus",
+              children: [],
+            },
+            {
+              href: "/app/teacher",
+              label: t("teacher"),
+              active: pathname === "/app/teacher",
+              icon: "heroicons-outline:academic-cap",
+              children: [],
+            },
+            {
+              href: "/app/school",
+              label: t("school"),
+              active: pathname === "/app/school",
+              icon: "heroicons-outline:building-office-2",
               children: [],
             },
             {
