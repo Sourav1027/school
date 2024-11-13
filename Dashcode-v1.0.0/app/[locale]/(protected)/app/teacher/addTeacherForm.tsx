@@ -348,7 +348,15 @@ const AddTeacherForm: React.FC<AddTeacherFormProps> = ({ isOpen, onClose }) => {
 
                     </div>
 
-                    <DialogFooter className="mt-6 flex items-center gap-2">
+                    <DialogFooter className="mt-6 flex gap-2 justify-self-start">
+                    <Button
+                            type="submit"
+                            disabled={loading}
+                            className="bg-green-600 hover:bg-green-700 h-8 text-sm px-3 py-1"
+                        >
+                            <Save className="w-4 h-4 mr-2" />
+                            {loading ? 'Saving...' : 'Save Teacher'}
+                        </Button>
                     <Button
                             type="button"
                             onClick={handleCancel}
@@ -358,14 +366,7 @@ const AddTeacherForm: React.FC<AddTeacherFormProps> = ({ isOpen, onClose }) => {
                             <X className="w-4 h-4 mr-2" />
                             Cancel
                         </Button>
-                        <Button
-                            type="submit"
-                            disabled={loading}
-                            className="bg-green-600 hover:bg-green-700 h-8 text-sm px-3 py-1"
-                        >
-                            <Save className="w-4 h-4 mr-2" />
-                            {loading ? 'Saving...' : 'Save Teacher'}
-                        </Button>
+                       
                     </DialogFooter>
                 </form>
             </DialogContent>
