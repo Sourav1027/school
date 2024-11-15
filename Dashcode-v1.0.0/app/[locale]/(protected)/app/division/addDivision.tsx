@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Dialog,DialogContent,DialogHeader,DialogTitle,DialogFooter,} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -6,6 +6,10 @@ import { Label } from "@/components/ui/label";
 import { Save, X } from 'lucide-react';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/solid';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+const apiurl = process.env.NEXT_PUBLIC_SITE_URL;
+const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNWM2M2Y5Ny02MDM5LTRlMGEtYjljNy03YTMxZjAxZWE0NzkiLCJ1c2VybmFtZSI6ImRlZXAiLCJzY2hvb2xJZCI6Ijc1NzM2YjAxLWRkZDYtNGE0OS05YTY4LTIwMmE4MDBiZGM0NSIsImlhdCI6MTczMTY2MjM3MCwiZXhwIjoxNzMxNzQ4NzcwfQ.tbo7aiRqOy5Bk-OsBj2yVyDqXyxwLRQ2DPupw3imIs0"
 
 interface AddClassProps {
     isOpen: boolean;
@@ -13,41 +17,99 @@ interface AddClassProps {
     onSuccess?: () => void;
 }
 
+interface ClassOption {
+    txnId: string;  // Changed from id to txnId to match API response
+    name: string;
+}
+
 const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) => {
-    const [divisionName, setdivisionName] = useState('');
+    const [divisionName, setDivisionName] = useState('');
+    const [selectedClassId, setSelectedClassId] = useState('');
+    const [classList, setClassList] = useState<ClassOption[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [isClosing, setIsClosing] = useState(false);
 
+    useEffect(() => {
+        fetchClassList();
+    }, []);
+
+      // Add effect to clear error message after 3 seconds
+      useEffect(() => {
+        let timeoutId: NodeJS.Timeout;
+        if (error) {
+            timeoutId = setTimeout(() => {
+                setError('');
+            }, 3000); // 3 seconds
+        }
+        return () => {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+        };
+    }, [error]);
+
+    const fetchClassList = async () => {
+        try {
+            const response = await fetch(`${apiurl}v1/class`, {
+                headers: {
+                    'Authorization': `Bearer ${jwtToken}`,
+                }
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to fetch class');
+            }
+
+            const data = await response.json();
+            // Set the data array from the response to classList
+            setClassList(data.data);
+        } catch (err) {
+            setError('Failed to load class. Please try again.');
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
 
         if (!divisionName.trim()) {
-            setError('Class name is required');
+            setError('Division name is required');
+            return;
+        }
+
+        if (!selectedClassId) {
+            setError('Please select a class');
             return;
         }
 
         setLoading(true);
         try {
-            const response = await fetch('/api/class', {
+            const response = await fetch(`${apiurl}v1/division`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${jwtToken}`,
                 },
-                body: JSON.stringify({ name: divisionName.trim() })
+                body: JSON.stringify({ 
+                    name: divisionName.trim(),
+                    classId: selectedClassId 
+                })
             });
 
+            const data = await response.json();
+
             if (!response.ok) {
-                throw new Error('Failed to create class');
+                setError(Array.isArray(data.message) ? data.message.join(', ') : data.message || 'Failed to create division');
+                return;
             }
 
-            setdivisionName('');
+            setDivisionName('');
+            setSelectedClassId('');
             onSuccess?.();
             onClose();
         } catch (err) {
-            setError('Failed to create class. Please try again.');
+            setError('Failed to create division. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -57,7 +119,8 @@ const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) =>
         setIsClosing(true);
         setTimeout(() => {
             setIsClosing(false);
-            setdivisionName('');
+            setDivisionName('');
+            setSelectedClassId('');
             setError('');
             onClose();
         }, 300);
@@ -68,7 +131,7 @@ const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) =>
             <DialogContent
                 className={`absolute top-0 left-0 right-0 mx-auto max-w-full h-auto p-6 overflow-y-auto bg-white shadow-lg rounded-lg transform transition-transform duration-300 ease-in-out ${
                     isOpen && !isClosing ? 'translate-x-0' : 'translate-x-full'}`}
-                style={{ marginTop: '0px', transform: 'none', maxWidth: '1200px', width: '90%' }}
+                style={{ marginTop: '0px', transform: 'none', maxWidth: '700px', width: '90%' }}
             >
                 <DialogHeader>
                     <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center gap-2">
@@ -84,28 +147,48 @@ const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) =>
                         </Alert>
                     )}
 
-                    <div className="space-y-2">
-                        <Label htmlFor="className" className="text-sm font-medium text-gray-700">
-                            Division Name
-                        </Label>
-                        <div className="relative">
-                            <AdjustmentsHorizontalIcon className="w-5 h-5 absolute left-3 top-2 text-gray-500" />
-                            <Input
-                                id="divisionName"
-                                value={divisionName}
-                                onChange={(e) => setdivisionName(e.target.value)}
-                                className="pl-10 focus:ring-green-500 focus:border-green-500 text-black"
-                                placeholder="Enter Class name"
-                                disabled={loading}
-                            />
+                    <div className="space-y-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="className" className="text-sm font-medium text-gray-700">
+                                Select Class
+                            </Label>
+                            <Select value={selectedClassId} onValueChange={setSelectedClassId}>
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Select a class" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {classList.map((classOption) => (
+                                        <SelectItem key={classOption.txnId} value={classOption.txnId}>
+                                            {classOption.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label htmlFor="className" className="text-sm font-medium text-gray-700">
+                                Division Name
+                            </Label>
+                            <div className="relative">
+                                <AdjustmentsHorizontalIcon className="w-5 h-5 absolute left-3 top-2 text-gray-500" />
+                                <Input
+                                    id="divisionName"
+                                    value={divisionName}
+                                    onChange={(e) => setDivisionName(e.target.value)}
+                                    className="pl-10 focus:ring-green-500 focus:border-green-500 text-black"
+                                    placeholder="Enter Division name"
+                                    disabled={loading}
+                                />
+                            </div>
                         </div>
                     </div>
 
                     <DialogFooter className="mt-6 flex gap-2 justify-self-start">
-                    <Button
+                        <Button
                             type="submit"
                             disabled={loading}
-                            className="bg-green-500 hover:bg-green-600 text-white  h-8 text-sm px-3 py-1"
+                            className="bg-green-500 hover:bg-green-600 text-white h-8 text-sm px-3 py-1"
                         >
                             <Save className="w-4 h-4 mr-2" />
                             {loading ? 'Saving...' : 'Save Division'}
