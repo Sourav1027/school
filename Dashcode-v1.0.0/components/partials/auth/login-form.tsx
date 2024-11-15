@@ -12,7 +12,7 @@ import { z } from "zod";
 import { cn } from "@/lib/utils"
 import { Loader2 } from 'lucide-react';
 import { loginUser } from '@/action/auth-action';
-import { toast } from "sonner";
+import { toast } from "sonner"
 import { useRouter } from '@/components/navigation';
 
 const schema = z.object({

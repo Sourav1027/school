@@ -17,6 +17,8 @@ const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) =>
     const [divisionName, setdivisionName] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [isClosing, setIsClosing] = useState(false);
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -51,16 +53,21 @@ const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) =>
         }
     };
 
-    const handleCancel = () => {
-        setdivisionName('');
-        setError('');
-        onClose();
+    const handleClose = () => {
+        setIsClosing(true);
+        setTimeout(() => {
+            setIsClosing(false);
+            setdivisionName('');
+            setError('');
+            onClose();
+        }, 300);
     };
 
     return (
-        <Dialog open={isOpen} onOpenChange={handleCancel}>
+        <Dialog open={isOpen} onOpenChange={handleClose}>
             <DialogContent
-                className="absolute top-0 left-0 right-0 mx-auto max-w-full h-auto p-6 overflow-y-auto bg-white shadow-lg rounded-lg"
+                className={`absolute top-0 left-0 right-0 mx-auto max-w-full h-auto p-6 overflow-y-auto bg-white shadow-lg rounded-lg transform transition-transform duration-300 ease-in-out ${
+                    isOpen && !isClosing ? 'translate-x-0' : 'translate-x-full'}`}
                 style={{ marginTop: '0px', transform: 'none', maxWidth: '1200px', width: '90%' }}
             >
                 <DialogHeader>
@@ -105,7 +112,7 @@ const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) =>
                         </Button>
                         <Button
                             type="button"
-                            onClick={handleCancel}
+                            onClick={handleClose}
                             disabled={loading}
                             className="bg-red-500 hover:bg-red-600 text-white h-8 text-sm px-3 py-1"
                         >
