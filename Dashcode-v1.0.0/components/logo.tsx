@@ -7,7 +7,6 @@ import { useMenuHoverConfig } from "@/hooks/use-menu-hover";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
 
-
 const Logo = () => {
     const [config] = useConfig()
     const [hoverConfig] = useMenuHoverConfig();
@@ -27,7 +26,7 @@ const Logo = () => {
             <DashCodeLogo className="  text-default-900 h-8 w-8 [&>path:nth-child(3)]:text-background [&>path:nth-child(2)]:text-background" />
             {(!config?.collapsed || hovered) && (
                 <h1 className="text-xl font-semibold text-default-900 ">
-                    DashCode
+                    School Up
                 </h1>
             )}
         </Link>

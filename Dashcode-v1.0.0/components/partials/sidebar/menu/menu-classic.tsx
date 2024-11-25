@@ -77,8 +77,6 @@ export function MenuClassic({ }) {
                         'text-center': collapsed || !hovered
                     })}>
 
-                        <TeamSwitcher />
-                        <SearchBar />
                     </div>
 
                 )}
@@ -144,11 +142,7 @@ export function MenuClassic({ }) {
 
                             </li>
                         ))}
-                        {!collapsed && (
-                            <li className="w-full grow flex items-end">
-                                <MenuWidget />
-                            </li>
-                        )}
+                        
                     </ul>
                 </nav>
 

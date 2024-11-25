@@ -16,6 +16,9 @@ import { GenderMale } from '@carbon/icons-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandsPraying } from '@fortawesome/free-solid-svg-icons';
 
+const apiurl = process.env.NEXT_PUBLIC_SITE_URL;
+const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNWM2M2Y5Ny02MDM5LTRlMGEtYjljNy03YTMxZjAxZWE0NzkiLCJ1c2VybmFtZSI6ImRlZXAiLCJzY2hvb2xJZCI6Ijc1NzM2YjAxLWRkZDYtNGE0OS05YTY4LTIwMmE4MDBiZGM0NSIsImlhdCI6MTczMTY2MjM3MCwiZXhwIjoxNzMxNzQ4NzcwfQ.tbo7aiRqOy5Bk-OsBj2yVyDqXyxwLRQ2DPupw3imIs0";
+
 
 interface AddStudentFormProps {
     isOpen: boolean;
@@ -159,19 +162,6 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
         'correspondencePincode'
     ]);
 
-    const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPhotoPreview(reader.result as string);
-            };
-            reader.readAsDataURL(file);
-        } else {
-            setPhotoPreview(null);
-        }
-    };
-
     useEffect(() => {
         if (sameAddress) {
             setValue('permanentAddress1', correspondenceFields[0]);
@@ -186,10 +176,11 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
     const onSubmit = async (data: StudentFormData) => {
         try {
             setLoading(true);
-            const response = await fetch('/api/students', {
+            const response = await fetch(`${apiurl}v1/student`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${jwtToken}`,
                 },
                 body: JSON.stringify(data),
             });
@@ -227,7 +218,13 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
     return (
         <Dialog open={isOpen} onOpenChange={handleClose}>
             <DialogContent className="flex flex-col p-6 absolute top-0 left-0 right-0 inset-0 mx-auto max-w-full h-auto overflow-y-auto bg-white shadow-lg rounded-lg"
-                style={{ marginTop: '0px', transform: 'none', maxWidth: '1200px', width: '90%', height: '95vh' }}>
+                style={{ marginTop: '0px', transform: 'none', maxWidth: '1400px', width: '90%', height: '85vh' }}
+                onPointerDownOutside={(e) => {
+                    e.preventDefault(); // Prevent closing on click outside
+                  }}
+                  onInteractOutside={(e) => {
+                    e.preventDefault(); // Prevent any interaction outside
+                  }}>
                 <DialogHeader className="px-6 py-4 border-b sticky top-0">
                     <DialogTitle className="text-xl font-semibold">Add New Student</DialogTitle>
                 </DialogHeader>

@@ -1,11 +1,11 @@
 // Define interfaces for our data structure
+'use client'
 interface TableData {
     id: number;
     roleName: string;
     status: 'active' | 'inactive';
     date: string;
   }
-  
   import React, { useState, useEffect } from 'react';
   import { Pencil, Trash2 } from 'lucide-react';
   const apiurl = process.env.NEXT_PUBLIC_SITE_URL;
@@ -22,12 +22,13 @@ interface TableData {
     const [error, setError] = useState<string | null>(null);
 
     const fetchData = async (): Promise<void> => {
+      const token = localStorage.getItem("auth_token");
       try {
         const response = await fetch(`${apiurl}v1/role`, {
           method: 'GET',
           headers: {
-            'Authorization': `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhZDczOWI5MC04ODUyLTQ5YTctYTg5Yy0zMGFjNmI4MWRmNzYiLCJ1c2VybmFtZSI6ImpvaG5kb2VkIiwic2Nob29sSWQiOjEwMSwiaWF0IjoxNzMwOTAwNDEzLCJleHAiOjE3MzA5ODY4MTN9.QAXAV73UnUiYKguLeXvav3bDgv7WDRo9ct_zqXmOUt8`,
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
           },
         });
         if (!response.ok) throw new Error('Failed to fetch data');

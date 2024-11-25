@@ -213,7 +213,7 @@ const HeaderSearch = () => {
                             </CommandGroup>
                         </div>
                     </CommandList>
-                </Command>
+                </Command>           
             </DialogContent>
         </Dialog>
     );

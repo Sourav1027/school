@@ -8,14 +8,21 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import Loader from '../others/loader';
 
 const apiurl = process.env.NEXT_PUBLIC_SITE_URL;
-const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNWM2M2Y5Ny02MDM5LTRlMGEtYjljNy03YTMxZjAxZWE0NzkiLCJ1c2VybmFtZSI6ImRlZXAiLCJzY2hvb2xJZCI6Ijc1NzM2YjAxLWRkZDYtNGE0OS05YTY4LTIwMmE4MDBiZGM0NSIsImlhdCI6MTczMTY2MjM3MCwiZXhwIjoxNzMxNzQ4NzcwfQ.tbo7aiRqOy5Bk-OsBj2yVyDqXyxwLRQ2DPupw3imIs0"
+
 interface AddBatchProps {
     isOpen: boolean;
     onClose: () => void;
     onSuccess?: () => void;
+    selectedBatch: Batch | null;
+}
+interface Batch {
+    id: number;       // Changed from txnId to id to match main component
+    name: string;
+    passingYear: string;
+    schoolOpenDate: string;
 }
 
-const AddBatch: React.FC<AddBatchProps> = ({ isOpen, onClose, onSuccess }) => {
+const AddBatch: React.FC<AddBatchProps> = ({ isOpen, onClose, onSuccess, selectedBatch }) => {
     const [formData, setFormData] = useState({
         name: '',
         passingYear: '',
@@ -32,11 +39,35 @@ const AddBatch: React.FC<AddBatchProps> = ({ isOpen, onClose, onSuccess }) => {
         type: 'success'
     });
 
-    const formatDate = (date: string) => {
-        if (!date) return '';
-        const [year, month, day] = date.split('-');
+    // Function to convert DD/MM/YYYY to YYYY-MM-DD
+    const convertToInputDateFormat = (dateString: string) => {
+        if (!dateString) return '';
+        const [day, month, year] = dateString.split('/');
+        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    };
+
+    // Function to convert YYYY-MM-DD to DD/MM/YYYY
+    const convertToApiDateFormat = (dateString: string) => {
+        if (!dateString) return '';
+        const [year, month, day] = dateString.split('-');
         return `${day}/${month}/${year}`;
     };
+
+    useEffect(() => {
+        if (selectedBatch) {
+            setFormData({
+                name: selectedBatch.name,
+                passingYear: selectedBatch.passingYear,
+                schoolOpenDate: convertToInputDateFormat(selectedBatch.schoolOpenDate) // Convert date for input field
+            });
+        } else {
+            setFormData({
+                name: '',
+                passingYear: '',
+                schoolOpenDate: ''
+            });
+        }
+    }, [selectedBatch]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -49,48 +80,57 @@ const AddBatch: React.FC<AddBatchProps> = ({ isOpen, onClose, onSuccess }) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
+        const token = localStorage.getItem("auth_token");
 
         try {
             const formattedData = {
                 ...formData,
-                schoolOpenDate: formatDate(formData.schoolOpenDate)
+                schoolOpenDate: convertToApiDateFormat(formData.schoolOpenDate)
             };
 
-            const response = await fetch(`${apiurl}v1/batch`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${jwtToken}`,
-                },
-                body: JSON.stringify(formattedData)
-            });
-
-            const data = await response.json();
+            let response;
+            let data;
+            if (selectedBatch) {
+                // Update existing batch
+                response = await fetch(`${apiurl}v1/batch/${selectedBatch.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(formattedData)
+                });
+                data = await response.json();
+            } else {
+                // Create new batch
+                response = await fetch(`${apiurl}v1/batch`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(formattedData)
+                });
+                data = await response.json();
+            }
 
             if (!response.ok) {
-                throw new Error(data.message || 'Failed to create batch');
+                throw new Error(data.message || 'Failed to create/update batch');
             }
 
             setAlert({
                 show: true,
-                message: 'Batch created successfully',
+                message: selectedBatch ? 'Batch updated successfully' : 'Batch created successfully',
                 type: 'success'
             });
 
-            setFormData({
-                name: '',
-                passingYear: '',
-                schoolOpenDate: '',
-            });
-            
-            // Wait for alert to show before closing
             setTimeout(() => {
                 onSuccess?.();
                 onClose();
             }, 2000);
 
         } catch (err) {
-            const errorMessage = err instanceof Error ? err.message : 'Failed to create batch. Please try again.';
+            const errorMessage = err instanceof Error ? err.message : 'Failed to create/update batch. Please try again.';
             setAlert({
                 show: true,
                 message: errorMessage,
@@ -121,10 +161,16 @@ const AddBatch: React.FC<AddBatchProps> = ({ isOpen, onClose, onSuccess }) => {
     }, [alert.show]);
 
     return (
-        <Dialog open={isOpen}>
+        <Dialog open={isOpen} onOpenChange={handleClose}>
             <DialogContent
                 className="absolute top-0 left-0 right-0 mx-auto max-w-full h-auto p-6 overflow-y-auto bg-white shadow-lg rounded-lg transform"
                 style={{ marginTop: '0px', transform: 'none', maxWidth: '700px', width: '90%' }}
+                onPointerDownOutside={(e) => {
+                    e.preventDefault(); // Prevent closing on click outside
+                  }}
+                  onInteractOutside={(e) => {
+                    e.preventDefault(); // Prevent any interaction outside
+                  }}
             >
                 {alert.show && (
                     <Alert
@@ -143,7 +189,7 @@ const AddBatch: React.FC<AddBatchProps> = ({ isOpen, onClose, onSuccess }) => {
                 <DialogHeader className="bg-gradient-to-r from-green-500 to-green-600 p-4 rounded-t-lg">
                     <DialogTitle className="text-2xl font-bold text-white flex items-center gap-2">
                         <BookOpen className="w-6 h-6" />
-                        Add New Batch
+                        {selectedBatch ? 'Update Batch' : 'Add New Batch'}
                     </DialogTitle>
                 </DialogHeader>
 
@@ -206,7 +252,7 @@ const AddBatch: React.FC<AddBatchProps> = ({ isOpen, onClose, onSuccess }) => {
                             className="bg-green-500 hover:bg-green-600 text-white h-8 text-sm px-3 py-1"
                         >
                             <Save className="w-4 h-4 mr-2" />
-                            {loading ? 'Saving...' : 'Save Batch'}
+                            {loading ? 'Saving...' : selectedBatch ? 'Update Batch' : 'Save Batch'}
                         </Button>
                         <Button
                             type="button"

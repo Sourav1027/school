@@ -9,7 +9,6 @@ import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/solid';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const apiurl = process.env.NEXT_PUBLIC_SITE_URL;
-const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNWM2M2Y5Ny02MDM5LTRlMGEtYjljNy03YTMxZjAxZWE0NzkiLCJ1c2VybmFtZSI6ImRlZXAiLCJzY2hvb2xJZCI6Ijc1NzM2YjAxLWRkZDYtNGE0OS05YTY4LTIwMmE4MDBiZGM0NSIsImlhdCI6MTczMTY2MjM3MCwiZXhwIjoxNzMxNzQ4NzcwfQ.tbo7aiRqOy5Bk-OsBj2yVyDqXyxwLRQ2DPupw3imIs0"
 
 interface AddClassProps {
     isOpen: boolean;
@@ -50,10 +49,12 @@ const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) =>
     }, [error]);
 
     const fetchClassList = async () => {
+        const token = localStorage.getItem("auth_token");
+
         try {
             const response = await fetch(`${apiurl}v1/class`, {
                 headers: {
-                    'Authorization': `Bearer ${jwtToken}`,
+                    'Authorization': `Bearer ${token}`,
                 }
             });
             
@@ -84,12 +85,13 @@ const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) =>
         }
 
         setLoading(true);
+        const token = localStorage.getItem("auth_token");
         try {
             const response = await fetch(`${apiurl}v1/division`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${jwtToken}`,
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify({ 
                     name: divisionName.trim(),
@@ -132,6 +134,12 @@ const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) =>
                 className={`absolute top-0 left-0 right-0 mx-auto max-w-full h-auto p-6 overflow-y-auto bg-white shadow-lg rounded-lg transform transition-transform duration-300 ease-in-out ${
                     isOpen && !isClosing ? 'translate-x-0' : 'translate-x-full'}`}
                 style={{ marginTop: '0px', transform: 'none', maxWidth: '700px', width: '90%' }}
+                onPointerDownOutside={(e) => {
+                    e.preventDefault(); // Prevent closing on click outside
+                  }}
+                  onInteractOutside={(e) => {
+                    e.preventDefault(); // Prevent any interaction outside
+                  }}
             >
                 <DialogHeader>
                     <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center gap-2">
