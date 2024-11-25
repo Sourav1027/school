@@ -11,7 +11,8 @@ import AddSchoolForm from './addSchoolForm';
 const apiurl = process.env.NEXT_PUBLIC_SITE_URL;
 
 interface School {
-  id: number;  // Updated to match API response
+  id:number;
+  txnId: number;  // Updated to match API response
   schoolCode: string;
   name: string;   // Updated from schoolName
   principleName: string;
@@ -68,7 +69,7 @@ const School: React.FC = () => {
       const result: ApiResponse = await response.json();
       setSchools(result.data);
       setTotalRecords(result.total);
-      
+
     } catch (error) {
       console.error('Error fetching schools:', error);
       Swal.fire({
@@ -105,6 +106,8 @@ const School: React.FC = () => {
   };
 
   const handleDeleteSchool = async (schoolId: number) => {
+    const token = localStorage.getItem("auth_token");
+
     const result = await Swal.fire({
       title: 'Are you sure?',
       text: 'Do you really want to delete this school?',
@@ -115,8 +118,8 @@ const School: React.FC = () => {
     });
 
     if (result.isConfirmed) {
-      const token = localStorage.getItem("auth_token");
       try {
+        console.log(`Deleting school with ID: ${schoolId}`);
         const response = await fetch(`${apiurl}v1/school/${schoolId}`, {
           method: 'DELETE',
           headers: {
@@ -125,21 +128,15 @@ const School: React.FC = () => {
           },
         });
 
-        const data = await response.json();
-
-        if (response.ok && data.success) {
-          Swal.fire('Deleted!', 'The school has been deleted.', 'success');
-          fetchSchools(currentPage, parseInt(recordsPerPage), searchQuery);
+        if (response.ok) {
+          Swal.fire('Deleted!', 'The batch has been deleted.', 'success');
+          fetchSchools(currentPage, parseInt(recordsPerPage), searchQuery); // Refresh after deletion
         } else {
-          throw new Error(data.message || 'Failed to delete school');
+          throw new Error('Failed to delete batch');
         }
       } catch (error) {
-        console.error('Error deleting school:', error);
-        Swal.fire({
-          title: 'Error',
-          text: error instanceof Error ? error.message : 'Failed to delete the school',
-          icon: 'error'
-        });
+        console.error('Error deleting batch:', error);
+        Swal.fire('Error', 'Failed to delete the batch.', 'error');
       }
     }
   };
@@ -212,44 +209,53 @@ const School: React.FC = () => {
                 </TableCell>
               </TableRow>
             ) : (
-              schools.map((school, index) => (
-                <TableRow
-                  key={school.id}
-                  className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
-                >
-                  <TableCell className="py-4 px-6 text-center border-r font-medium text-gray-900">
-                    {(currentPage - 1) * parseInt(recordsPerPage) + index + 1}
-                  </TableCell>
-                  <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.schoolCode}</TableCell>
-                  <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.name}</TableCell>
-                  <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.principleName}</TableCell>
-                  <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.contact}</TableCell>
-                  <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.landline}</TableCell>
-                  <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.email}</TableCell>
-                  <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.createdAt}</TableCell>
-                  <TableCell className="py-4 px-6">
-                    <div className="flex justify-center gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="border-blue-200 hover:bg-blue-50 text-blue-600"
-                        onClick={() => handleEditSchool(school)}
-                      >
-                        <PencilIcon className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="border-red-200 hover:bg-red-50 text-red-600"
-                        onClick={() => handleDeleteSchool(school.id)}
-                      >
-                        <TrashIcon className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))
+
+              schools.map((school, index) => {
+                console.log('School:', school); // Log the full school object to ensure it contains 'id'
+                return (
+                  <TableRow
+                    key={school.txnId}
+                    className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
+                  >
+                    <TableCell className="py-4 px-6 text-center border-r font-medium text-gray-900">
+                      {(currentPage - 1) * parseInt(recordsPerPage) + index + 1}
+                    </TableCell>
+                    <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.schoolCode}</TableCell>
+                    <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.name}</TableCell>
+                    <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.principleName}</TableCell>
+                    <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.contact}</TableCell>
+                    <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.landline}</TableCell>
+                    <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.email}</TableCell>
+                    <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.createdAt}</TableCell>
+                    <TableCell className="py-4 px-6">
+                      <div className="flex justify-center gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="border-blue-200 hover:bg-blue-50 text-blue-600"
+                          onClick={() => handleEditSchool(school)}
+                        >
+                          <PencilIcon className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="border-red-200 hover:bg-red-50 text-red-600"
+
+                          onClick={() => {
+                            console.log('Attempting to delete school with ID:', school.txnId); // Check the ID value
+                            handleDeleteSchool(school.txnId);
+                          }}
+                        >
+                          <TrashIcon className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
             )}
+
           </TableBody>
         </Table>
       </div>
@@ -291,9 +297,9 @@ const School: React.FC = () => {
       </div>
 
       {/* Add/Edit School Dialog */}
-      <AddSchoolForm 
-        isOpen={isDialogOpen} 
-        onClose={handleCloseDialog} 
+      <AddSchoolForm
+        isOpen={isDialogOpen}
+        onClose={handleCloseDialog}
         selectedSchool={selectedSchool}
       />
     </div>
