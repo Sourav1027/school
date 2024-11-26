@@ -1,6 +1,6 @@
 export const metadata = {
-  title: "Dashcode Next Js",
-  description: "Dashcode is a popular dashboard template.",
+  title: "schoolUp",
+  description: "schoolUp is a popular school app.",
 };
 
 const layout = ({ children }: { children: React.ReactNode }) => {

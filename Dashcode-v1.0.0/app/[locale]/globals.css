@@ -148,32 +148,32 @@
 }
 
 /* vector map */
-.dashcode-app-vmap path {
+.schoolUp-app-vmap path {
   @apply fill-[#6794DC];
 }
 
-.dashcode-app-vmap .svg-map__location[aria-checked="true"] {
+.schoolUp-app-vmap .svg-map__location[aria-checked="true"] {
   @apply fill-primary;
 }
 
-.dashcode-app-codeVmapInfo path {
+.schoolUp-app-codeVmapInfo path {
   @apply fill-info;
 }
 
-.dashcode-app-codeVmapInfo path .svg-map__location[aria-checked="true"] {
+.schoolUp-app-codeVmapInfo path .svg-map__location[aria-checked="true"] {
   @apply fill-info;
 }
-.dashcode-app-codeVmapWarning path {
+.schoolUp-app-codeVmapWarning path {
   @apply fill-warning;
 }
-.dashcode-app-codeVmapWarning path  .svg-map__location[aria-checked="true"] {
+.schoolUp-app-codeVmapWarning path  .svg-map__location[aria-checked="true"] {
     @apply fill-warning;
 }
-.dashcode-app-codeVmapSuccess path {
+.schoolUp-app-codeVmapSuccess path {
   @apply fill-success;
 
 }
-.dashcode-app-codeVmapSuccess path .svg-map__location[aria-checked="true"]  {
+.schoolUp-app-codeVmapSuccess path .svg-map__location[aria-checked="true"]  {
     @apply fill-success;
 }
 
@@ -266,257 +266,257 @@
 }
 
 /* calendar */
-.dashcode-app-calendar .fc-toolbar-chunk button {
+.schoolUp-app-calendar .fc-toolbar-chunk button {
   @apply h-12 px-5;
 }
 
-.dashcode-app-calendar .fc-toolbar-chunk button.fc-prev-button {
+.schoolUp-app-calendar .fc-toolbar-chunk button.fc-prev-button {
   @apply text-default-600;
 }
 
-.dashcode-app-calendar .fc-toolbar-chunk button.fc-next-button {
+.schoolUp-app-calendar .fc-toolbar-chunk button.fc-next-button {
   @apply text-default-600;
 }
 
-.dashcode-app-calendar .fc-button {
+.schoolUp-app-calendar .fc-button {
   @apply h-12 px-5;
 }
 
-.dashcode-app-calendar .fc .fc-button-primary {
+.schoolUp-app-calendar .fc .fc-button-primary {
   @apply bg-transparent hover:bg-primary border border-default-200 dark:border-default-300 dark:hover:bg-default-50 dark:hover:text-foreground text-default-700 capitalize;
 }
 
-.dashcode-app-calendar .fc .fc-button-primary.fc-button-active {
+.schoolUp-app-calendar .fc .fc-button-primary.fc-button-active {
   @apply border-none;
 }
 
-.dashcode-app-calendar .fc .fc-button-primary:not(:disabled):active,
-.dashcode-app-calendar .fc .fc-button-primary:not(:disabled).fc-button-active,
-.dashcode-app-calendar .fc .fc-button-primary:hover {
+.schoolUp-app-calendar .fc .fc-button-primary:not(:disabled):active,
+.schoolUp-app-calendar .fc .fc-button-primary:not(:disabled).fc-button-active,
+.schoolUp-app-calendar .fc .fc-button-primary:hover {
   @apply bg-default text-default-foreground dark:bg-default-50 dark:text-foreground;
 }
 
-.dashcode-app-calendar .fc .fc-button-primary:disabled {
+.schoolUp-app-calendar .fc .fc-button-primary:disabled {
   @apply bg-transparent border border-default-200 cursor-not-allowed hover:text-default-800;
 }
 
-.dashcode-app-calendar .fc-today-button {
+.schoolUp-app-calendar .fc-today-button {
   @apply hover:text-primary-foreground;
 }
 
-.dashcode-app-calendar .fc .fc-button-primary:focus {
+.schoolUp-app-calendar .fc .fc-button-primary:focus {
   box-shadow: none !important;
 }
 
-.dashcode-app-calendar .fc-theme-standard .fc-scrollgrid {
+.schoolUp-app-calendar .fc-theme-standard .fc-scrollgrid {
   @apply border-default-100 dark:border-default-300;
 }
 
-.dashcode-app-calendar .fc-theme-standard td,
-.dashcode-app-calendar .fc-theme-standard th {
+.schoolUp-app-calendar .fc-theme-standard td,
+.schoolUp-app-calendar .fc-theme-standard th {
   @apply border-default-100 dark:border-default-300;
 }
 
-.dashcode-app-calendar .fc-col-header-cell .fc-scrollgrid-sync-inner {
+.schoolUp-app-calendar .fc-col-header-cell .fc-scrollgrid-sync-inner {
   @apply bg-default-50 dark:bg-default-300 text-xs text-default-600 font-normal py-3;
 }
 
-.dashcode-app-calendar .fc-col-header-cell {
+.schoolUp-app-calendar .fc-col-header-cell {
   @apply border-none;
 }
 
-.dashcode-app-calendar .fc-daygrid-day-top {
+.schoolUp-app-calendar .fc-daygrid-day-top {
   @apply text-sm px-3 py-2 text-default-900 font-normal;
 }
 
-.dashcode-app-calendar .fc-h-event .fc-event-main-frame {
+.schoolUp-app-calendar .fc-h-event .fc-event-main-frame {
   @apply flex justify-center items-center text-center w-max mx-auto;
 }
 
-.dashcode-app-calendar .fc-event-time {
+.schoolUp-app-calendar .fc-event-time {
   @apply text-sm font-normal flex-none text-primary-foreground;
 }
 
-.dashcode-app-calendar .fc-timegrid-event .fc-event-main {
+.schoolUp-app-calendar .fc-timegrid-event .fc-event-main {
   @apply p-0 flex justify-center items-center gap-1;
 }
 
-.dashcode-app-calendar .fc-event-title {
+.schoolUp-app-calendar .fc-event-title {
   @apply text-sm font-light;
 }
 
-.dashcode-app-calendar .fc-timegrid-col-events .fc-event-title {
+.schoolUp-app-calendar .fc-timegrid-col-events .fc-event-title {
   @apply pt-4;
 }
 
-.dashcode-app-calendar .fc .fc-toolbar-title {
+.schoolUp-app-calendar .fc .fc-toolbar-title {
   @apply text-lg font-normal text-default-600;
 }
 
-.dashcode-app .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
+.schoolUp-app .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
   @apply p-1;
 }
 
-.dashcode-app-calendar .fc-theme-standard .fc-list {
+.schoolUp-app-calendar .fc-theme-standard .fc-list {
   @apply border border-default-200;
 }
 
-.dashcode-app-calendar .fc-daygrid-event-dot {
+.schoolUp-app-calendar .fc-daygrid-event-dot {
   @apply hidden;
 }
 
-.dashcode-app-calendar .fc .fc-list-sticky .fc-list-day>* {
+.schoolUp-app-calendar .fc .fc-list-sticky .fc-list-day>* {
   @apply bg-default-50;
 }
 
-.dashcode-app-calendar .fc-timegrid-col-events .fc-event-title {
+.schoolUp-app-calendar .fc-timegrid-col-events .fc-event-title {
   @apply pt-0;
 }
 
-.dashcode-app-calendar .fc-timegrid-event-harness>.fc-timegrid-event {
+.schoolUp-app-calendar .fc-timegrid-event-harness>.fc-timegrid-event {
   @apply static;
 }
 
 @media (max-width: 981px) {
 
-  .dashcode-app-calendar .fc-button-group,
-  .dashcode-app-calendar .fc .fc-toolbar {
+  .schoolUp-app-calendar .fc-button-group,
+  .schoolUp-app-calendar .fc .fc-toolbar {
     display: block !important;
   }
 
-  .dashcode-app-calendar .fc .fc-toolbar {
+  .schoolUp-app-calendar .fc .fc-toolbar {
     @apply space-y-4;
   }
 
-  .dashcode-app-calendar .fc-toolbar-chunk {
+  .schoolUp-app-calendar .fc-toolbar-chunk {
     @apply space-y-4;
   }
 
-  .dashcode-app-calendar .fc .fc-button {
+  .schoolUp-app-calendar .fc .fc-button {
     padding: 0.4em 0.65em !important;
   }
 }
 
-.dashcode-app-calendar .fc .fc-timegrid-axis-cushion,
-.dashcode-app-calendar .fc .fc-timegrid-slot-label-cushion {
+.schoolUp-app-calendar .fc .fc-timegrid-axis-cushion,
+.schoolUp-app-calendar .fc .fc-timegrid-slot-label-cushion {
   @apply dark:text-default-300;
 }
 
-.dashcode-app-calendar .fc .fc-list-event:hover td {
+.schoolUp-app-calendar .fc .fc-list-event:hover td {
   @apply bg-inherit;
 }
 
-.dashcode-app-calendar .fc .fc-list-event-dot {
+.schoolUp-app-calendar .fc .fc-list-event-dot {
   @apply hidden;
 }
 
-.dashcode-app-calendar .fc-direction-ltr .fc-list-day-text,
-.dashcode-app-calendar .fc-direction-rtl .fc-list-day-side-text,
-.dashcode-app-calendar .fc-direction-ltr .fc-list-day-side-text,
-.dashcode-app-calendar .fc-direction-rtl .fc-list-day-text {
+.schoolUp-app-calendar .fc-direction-ltr .fc-list-day-text,
+.schoolUp-app-calendar .fc-direction-rtl .fc-list-day-side-text,
+.schoolUp-app-calendar .fc-direction-ltr .fc-list-day-side-text,
+.schoolUp-app-calendar .fc-direction-rtl .fc-list-day-text {
   @apply text-base font-medium text-default-600;
 }
 
-.dashcode-app-calendar .primary {
+.schoolUp-app-calendar .primary {
   @apply bg-primary border-none text-primary-foreground text-center px-2 font-medium text-sm;
 }
 
-.dashcode-app-calendar .secondary {
+.schoolUp-app-calendar .secondary {
   @apply bg-secondary border-none text-primary-foreground text-center px-2 font-medium text-sm;
 }
 
-.dashcode-app-calendar .danger {
+.schoolUp-app-calendar .danger {
   @apply bg-destructive border-none text-primary-foreground text-center px-2 font-medium text-sm;
 }
 
-.dashcode-app-calendar .destructive {
+.schoolUp-app-calendar .destructive {
   @apply bg-destructive border-none text-primary-foreground text-center px-2 font-medium text-sm;
 }
 
-.dashcode-app-calendar .info {
+.schoolUp-app-calendar .info {
   @apply bg-info border-none text-primary-foreground text-center px-2 font-medium text-sm;
 }
 
-.dashcode-app-calendar .warning {
+.schoolUp-app-calendar .warning {
   @apply bg-warning border-none text-primary-foreground text-center px-2 font-medium text-sm;
 }
 
-.dashcode-app-calendar .success {
+.schoolUp-app-calendar .success {
   @apply bg-success border-none text-primary-foreground text-center px-2 font-medium text-sm;
 }
 
-.dashcode-app-calendar .dark  {
+.schoolUp-app-calendar .dark  {
   @apply bg-card-foreground border-none text-primary-foreground px-2 font-medium text-sm;
 }
 
 
 /* react select */
 
- .dashcode-app .react-select .react-select.is-invalid .select__control {
+ .schoolUp-app .react-select .react-select.is-invalid .select__control {
   border-color: none !important;
 }
 
-.dashcode-app .react-select .select__control {
+.schoolUp-app .react-select .select__control {
   @apply bg-background min-h-8 border border-default-200 focus:border-default;
 }
 
-.dashcode-app .react-select .select__single-value {
+.schoolUp-app .react-select .select__single-value {
   @apply text-sm font-medium text-default-800;
 }
 
-.dashcode-app .react-select .select__menu {
+.schoolUp-app .react-select .select__menu {
   @apply bg-background;
 }
 
-.dashcode-app .react-select .select__placeholder {
+.schoolUp-app .react-select .select__placeholder {
   @apply text-default-500;
 }
 
-.dashcode-app .react-select .select__menu .select__option {
+.schoolUp-app .react-select .select__menu .select__option {
   @apply  hover:bg-default/10;
 }
 
-.dashcode-app .react-select .select__menu .select__option.select__option--is-selected {
+.schoolUp-app .react-select .select__menu .select__option.select__option--is-selected {
   @apply bg-default dark:bg-default-200;
 }
 
-.dashcode-app .react-select.is-invalid .select__control {
+.schoolUp-app .react-select.is-invalid .select__control {
   border-color: none !important;
 }
 
-.dashcode-app .react-select .has-error .select__control {
+.schoolUp-app .react-select .has-error .select__control {
   @apply border-destructive;
 }
 
-.dashcode-app .react-select .react-select__control .select__input {
+.schoolUp-app .react-select .react-select__control .select__input {
   @apply text-default-500;
 }
 
-.dashcode-app .react-select .react-select__control.select__control--is-disabled {
+.schoolUp-app .react-select .react-select__control.select__control--is-disabled {
   @apply cursor-not-allowed;
 }
 
-.dashcode-app .react-select .react-select__control .select__indicator-separator {
+.schoolUp-app .react-select .react-select__control .select__indicator-separator {
   @apply bg-default-50 text-default-800 placeholder:text-opacity-60;
 }
 
-.dashcode-app .react-select .react-select__control .select__indicator svg {
+.schoolUp-app .react-select .react-select__control .select__indicator svg {
   @apply cursor-pointer text-default-600;
 }
 
-.dashcode-app .react-select .has-error .react-select__control .select__indicator svg {
+.schoolUp-app .react-select .has-error .react-select__control .select__indicator svg {
   @apply text-destructive;
 }
 
-.dashcode-app .react-select .select__multi-value__label {
+.schoolUp-app .react-select .select__multi-value__label {
   @apply text-xs bg-default  text-default-foreground rounded-none ltr:rounded-l rtl:rounded-r;
 }
 
-.dashcode-app .react-select .select__multi-value__remove {
+.schoolUp-app .react-select .select__multi-value__remove {
   @apply bg-default rounded-none ltr:rounded-r rtl:rounded-l;
 }
 
-.dashcode-app .react-select .select__multi-value__remove svg {
+.schoolUp-app .react-select .select__multi-value__remove svg {
   @apply fill-default-foreground;
 }
 

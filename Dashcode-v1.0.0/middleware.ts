@@ -3,7 +3,7 @@ import {NextRequest} from 'next/server';
 import {locales} from '@/config';
 
 export default function middleware(request: NextRequest) {
-  const defaultLocale = request.headers.get('dashcode-locale') || 'en';
+  const defaultLocale = request.headers.get('schoolUp-locale') || 'en';
   
   return createMiddleware({
     locales: locales,

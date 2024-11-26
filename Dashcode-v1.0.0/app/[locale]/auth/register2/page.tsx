@@ -22,7 +22,7 @@ const Register2 = () => {
                 <div className="text-center 2xl:mb-10 mb-5">
                   <h4 className="font-medium">Sign up</h4>
                   <div className="text-default-500  text-base">
-                    Create an account to start using Dashcode
+                    Create an account to start using schoolUp
                   </div>
                 </div>
                 <RegForm />
@@ -45,7 +45,7 @@ const Register2 = () => {
                 </div>
               </div>
               <div className="text-xs font-normal text-default-500 z-[999] pb-10 text-center">
-                Copyright 2021, Dashcode All Rights Reserved.
+                Copyright 2021, schoolUp All Rights Reserved.
               </div>
             </div>
           </div>

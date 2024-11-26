@@ -42,7 +42,7 @@ s lg:w-1/2"
                   Sign up
                 </h4>
                 <div className="text-default-500  text-base">
-                  Create an account to start using Dashcode
+                  Create an account to start using schoolUp
                 </div>
               </div>
               <RegForm />
