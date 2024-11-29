@@ -1,0 +1,44 @@
+{
+  "Index": {
+      "title": "हमारी वेबसाइट में आपका स्वागत है"
+  },
+  "AnalyticsDashboard": {
+      "widget_title": "अपना डैशकोड अपडेट करें",
+      "widget_desc": "बेहतर परिणामों के लिए प्रोफेशनल योजना",
+      "widget_badge": "अभी",
+      "revenue_chart_title": "कुल राजस्व",
+      "revenue_report": "राजस्व रिपोर्ट",
+      "sold_chart_title": "बिके हुए उत्पाद",
+      "growth_chart_title": "विकास",
+      "overview_circle_chart_title": "सारांश",
+      "company_table_title": "सभी कंपनियां",
+      "recent_activity_table_title": "हाल की गतिविधियां",
+      "most_sales_map_title": "सबसे अधिक बिक्री",
+      "total_earning_map_desc": "कुल कमाई",
+      "total_earning_map_desc_2": "पिछले महीने से",
+      "total_earning_map_button_1": "वैश्विक",
+      "invested_amount": "निवेश की गई राशि",
+      "last_28_days": "पिछले 28 दिन",
+      "last_months": "पिछले महीने",
+      "last_year": "पिछला साल"
+  },
+
+  "Menu": {
+      "dashboard": "डैशबोर्ड",
+      "analytics": "विश्लेषण",
+      "role": "भूमिका",
+      "teacher": "शिक्षक",
+      "school": "स्कूल",
+      "student": "छात्र",
+      "class": "कक्षा",
+      "section": "खंड",
+      "division": "विभाग",
+      "batch": "बैच",
+      "importstudentdata": "छात्र डेटा आयात करें"
+  },
+  "Changelog": {
+      "version": "संस्करण",
+      "changelog": "परिवर्तन सूची",
+      "versionHistory": "संस्करण इतिहास"
+  }
+}
