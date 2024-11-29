@@ -12,7 +12,7 @@ import SiteBreadcrumb from "@/components/site-breadcrumb";
 const AlertPage = () => {
   return (
     <>
-    <SiteBreadcrumb/>
+      <SiteBreadcrumb />
       <div className="grid grid-cols-2  gap-6">
         <div className="col-span-2 lg:col-span-1">
           <Card title="Color" code={basicAlert}>
@@ -31,7 +31,9 @@ const AlertPage = () => {
         </div>
         <div className="col-span-2 lg:col-span-1">
           <Card title="Dismissible Theme Color Alerts With Icon" code={dismissableAlert}>
-            <DissmissableAlert />
+            <DissmissableAlert color="success">
+              Operation completed successfully!
+            </DissmissableAlert>
           </Card>
         </div>
         <div className="col-span-2 lg:col-span-1">
