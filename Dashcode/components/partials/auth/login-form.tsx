@@ -12,8 +12,7 @@ import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { useRouter } from "@/components/navigation";
-
+import { useRouter } from "next/navigation";
 const schema = z.object({
   username: z.string().min(1, { message: "Username is required" }),
   password: z.string().min(6, { message: "Password must be at least 6 characters" }),
@@ -30,7 +29,7 @@ type FormData = {
 const LoginForm: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [passwordType, setPasswordType] = React.useState("password");
-  const router = useRouter();
+  const router = useRouter(); // Use the router from i18n routing
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -47,7 +46,7 @@ const LoginForm: React.FC = () => {
   };
 
   const onSubmit: SubmitHandler<{ username: string; password: string }> = async (data) => {
-    setIsLoading(true); // Start loading
+    setIsLoading(true);
     try {
       const response = await fetch(`${apiurl}v1/signin`, {
         method: "POST",
@@ -58,32 +57,29 @@ const LoginForm: React.FC = () => {
       });
   
       const result = await response.json();
-      console.log("API Response:", result); // Debugging the API response
+      console.log("API Response:", result);
   
       if (!response.ok) {
         toast.error(result.message || "Login failed");
         return;
       }
   
-      // Extract the token from the API response
       const token = result.jwt;
       if (!token) {
         throw new Error("Token is missing from the API response");
       }
   
-      // Save token and role in localStorage
       localStorage.setItem("auth_token", token);
   
       toast.success("Successfully logged in");
-      router.push("/dashboard/analytics");
+      router.push("/dashboard/analytics"); // Use router.push for navigation
     } catch (err: any) {
       console.error("Error during login:", err);
       toast.error(err.message || "An unexpected error occurred");
     } finally {
-      setIsLoading(false); // Stop loading
+      setIsLoading(false);
     }
   };
-  
   
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-5 2xl:mt-7 space-y-4">
