@@ -12,18 +12,18 @@ const Register = () => {
             className="lg:block hidden flex-1 overflow-hidden text-[40px] leading-[48px] text-default-600 
  relative z-[1] bg-default-50"
           >
-            <div className="max-w-[520px] pt-20 ps-20">
-              <Link href="/" className="mb-6 inline-block">
+         <div className="max-w-[520px] pt-0 ps-20 ">
+              <Link href="/" className="mt-6 inline-block">
                 <Logo />
               </Link>
             </div>
-            <div className="absolute left-0 bottom-[-130px] h-full w-full z-[-1]">
+            <div className="absolute left-0 2xl:bottom-[-80px] bottom-[-130px] h-full w-full ">
               <Image
-                src="/images/auth/ils1.svg"
+                src="/images/all-img/sg.svg"
                 alt=""
-                width={300}
-                height={300}
-                className="mb-10 w-full h-full"
+                width={400}
+                height={400}
+                className=" w-full h-full"
               />
             </div>
           </div>
@@ -46,7 +46,7 @@ const Register = () => {
                 <div className="max-w-[225px] mx-auto font-normal text-default-500  2xl:mt-12 mt-6 uppercase text-sm">
                   Already registered?
                   <Link
-                    href="/login"
+                    href="/"
                     className="text-default-900  font-medium hover:underline"
                   >
                     Sign In

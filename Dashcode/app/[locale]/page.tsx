@@ -18,9 +18,9 @@ const Login = ({ params: { locale } }: { params: { locale: string } }) => {
                 <Logo />
               </Link>
             </div>
-            <div className="absolute left-0 2xl:bottom-[-80px] bottom-[-130px] h-full w-full ">
+            <div className="absolute left-0 2xl:bottom-[-35px] h-full w-full ">
               <Image
-                src="/images/all-img/login.png"
+                src="/images/all-img/cllg.svg"
                 alt=""
                 width={400}
                 height={400}

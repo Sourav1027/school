@@ -141,7 +141,7 @@ const LoginForm: React.FC = () => {
           <Checkbox id="checkbox" {...register("rememberMe")} />
           <Label htmlFor="checkbox">Keep Me Signed In</Label>
         </div>
-        <Link href="/forgot-password" className="text-sm text-default-800 dark:text-default-400 leading-6 font-medium">
+        <Link href="/auth/forgot-password" className="text-sm text-default-800 dark:text-default-400 leading-6 font-medium">
           Forgot Password?
         </Link>
       </div>
