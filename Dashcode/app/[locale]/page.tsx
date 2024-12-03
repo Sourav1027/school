@@ -14,7 +14,7 @@ const Login = ({ params: { locale } }: { params: { locale: string } }) => {
  relative z-[1] bg-default-50"
           >
             <div className="max-w-[520px] pt-0 ps-20 ">
-              <Link href="/" className="mb-6 inline-block">
+              <Link href="/" className="mt-6 inline-block">
                 <Logo />
               </Link>
             </div>
