@@ -20,6 +20,7 @@ const config = {
     },
     extend: {
        colors: {
+        customBlue: '#A3B7F4',
         border: "hsl(var(--border))",
         'menu-arrow': "hsl(var(--menu-arrow))",
         'menu-arrow-active': "hsl(var(--menu-arrow-active))",

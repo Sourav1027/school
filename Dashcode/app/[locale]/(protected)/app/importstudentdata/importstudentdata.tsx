@@ -1,11 +1,11 @@
 'use client'
 import React from 'react'
-import Data   from './data';
+import StudentDataUpload   from './data';
 
 const ImportStudentData = () => {
   return (
     <div>
-     <Data/>
+     <StudentDataUpload/>
     </div>
   )
 }

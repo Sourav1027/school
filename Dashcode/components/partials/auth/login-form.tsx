@@ -33,7 +33,7 @@ const LoginForm: React.FC = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
-    mode: "all",
+    mode: "all", 
     defaultValues: {
       username: "",
       password: "",
@@ -146,7 +146,7 @@ const LoginForm: React.FC = () => {
         </Link>
       </div>
 
-      <Button fullWidth disabled={isLoading} type="submit">
+      <Button fullWidth disabled={isLoading} type="submit" >
         {isLoading ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
