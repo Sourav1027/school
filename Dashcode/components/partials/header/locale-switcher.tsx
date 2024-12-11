@@ -6,13 +6,7 @@ import { locales } from '@/config';
 import { usePathname, useRouter } from '@/i18n/routing';
 
 import { useTransition } from 'react';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select"
 import Image from 'next/image';
 
 export default function LocalSwitcher() {

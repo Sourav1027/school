@@ -52,7 +52,7 @@ const MostSales = () => {
             className={cn(
               "flex-1 text-sm font-normal px-3 py-1 transition-all duration-150 rounded cursor-pointer",
               {
-                "bg-default-900 text-primary-foreground dark:bg-default-300 dark:text-foreground ":
+                "bg-default-900 text-primary-foreground dark:bg-default-300 dark:text-foreground font-montserrat":
                   filterMap === "global",
               }
             )}
@@ -63,7 +63,7 @@ const MostSales = () => {
           <span
             className={cn(
               "flex-1 text-sm font-normal px-3 py-1 transition-all duration-150 rounded cursor-pointer",
-              { "bg-default-900 text-primary-foreground dark:bg-default-300 dark:text-foreground ": filterMap === "usa" }
+              { "bg-default-900 text-primary-foreground dark:bg-default-300 dark:text-foreground font-montserrat": filterMap === "usa" }
             )}
             onClick={() => setFilterMap("usa")}
           >
@@ -74,21 +74,21 @@ const MostSales = () => {
       <CardContent>
         <div className="md:flex items-center">
           <div className="flex-none">
-            <h4 className="text-default-600  text-sm font-normal mb-1.5">
+            <h4 className="text-default-600  text-sm font-normal mb-1.5 font-montserrat">
               {t("total_earning_map_desc")}
             </h4>
             {filterMap === "usa" && (
-              <div className="text-lg font-medium mb-1.5  text-default-900">
+              <div className="text-lg font-medium mb-1.5  text-default-900 font-montserrat">
                 $12,65,64787.00
               </div>
             )}
             {filterMap === "global" && (
-              <div className="text-lg font-medium mb-1.5  text-default-900">
+              <div className="text-lg font-medium mb-1.5  text-default-900 font-montserrat">
                 $12,65.00
               </div>
             )}
-            <div className="text-xs font-light">
-              <span className="text-primary">+08%</span>{" "}
+            <div className="text-xs font-light font-montserrat">
+              <span className="text-primary font-montserrat">+08%</span>{" "}
               {t("total_earning_map_desc_2")}
             </div>
             <ul className="bg-default-50 rounded p-4 min-w-[184px] space-y-5 mt-4">

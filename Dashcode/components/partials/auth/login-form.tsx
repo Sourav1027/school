@@ -15,7 +15,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 const schema = z.object({
   username: z.string().min(1, { message: "Username is required" }),
-  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+  password: z.string().min(8, { message: "Password must be at least 8 characters" }),
 });
 
 const apiurl = process.env.NEXT_PUBLIC_SITE_URL;
@@ -52,6 +52,7 @@ const LoginForm: React.FC = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          
         },
         body: JSON.stringify(data),
       });
@@ -63,7 +64,7 @@ const LoginForm: React.FC = () => {
         toast.error(result.message || "Login failed");
         return;
       }
-  
+      
       const token = result.jwt;
       if (!token) {
         throw new Error("Token is missing from the API response");
@@ -84,7 +85,7 @@ const LoginForm: React.FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-5 2xl:mt-7 space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="username" className="font-medium text-default-600">
+        <Label htmlFor="username" className="font-medium text-default-600 font-montserrat">
           Username
         </Label>
         <Input
@@ -93,19 +94,19 @@ const LoginForm: React.FC = () => {
           {...register("username")}
           type="text"
           id="username"
-          className={cn("", {
+          className={cn("font-montserrat", {
             "border-destructive": errors.username,
           })}
         />
         {errors.username && (
-          <div className="text-destructive mt-2 text-sm">
+          <div className="text-destructive mt-2 text-sm font-montserrat">
             {errors.username.message}
           </div>
         )}
       </div>
 
       <div className="mt-3.5 space-y-2">
-        <Label htmlFor="password" className="mb-2 font-medium text-default-600">
+        <Label htmlFor="password" className="mb-2 font-medium text-default-600 font-montserrat">
           Password
         </Label>
         <div className="relative">
@@ -115,7 +116,7 @@ const LoginForm: React.FC = () => {
             {...register("password")}
             type={passwordType}
             id="password"
-            className="peer"
+            className="peer font-montserrat"
             placeholder=" "
           />
           <div
@@ -130,7 +131,7 @@ const LoginForm: React.FC = () => {
           </div>
         </div>
         {errors.password && (
-          <div className="text-destructive mt-2 text-sm">
+          <div className="text-destructive mt-2 text-sm font-montserrat">
             {errors.password.message}
           </div>
         )}
@@ -139,14 +140,14 @@ const LoginForm: React.FC = () => {
       <div className="flex justify-between">
         <div className="flex gap-2 items-center">
           <Checkbox id="checkbox" {...register("rememberMe")} />
-          <Label htmlFor="checkbox">Keep Me Signed In</Label>
+          <Label htmlFor="checkbox" className="font-montserrat">Keep Me Signed In</Label>
         </div>
-        <Link href="/auth/forgot-password" className="text-sm text-default-800 dark:text-default-400 leading-6 font-medium">
+        <Link href="/auth/forgot-password" className="text-sm text-default-800 dark:text-default-400 leading-6 font-medium font-montserrat">
           Forgot Password?
         </Link>
       </div>
 
-      <Button fullWidth disabled={isLoading} type="submit" >
+      <Button fullWidth disabled={isLoading} type="submit"   className="font-montserrat" >
         {isLoading ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />

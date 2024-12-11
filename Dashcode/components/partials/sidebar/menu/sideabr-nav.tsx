@@ -26,9 +26,6 @@ const SidebarNav = ({ menuList }: { menuList: Group[] }) => {
     return null;
   }
 
-
-
-
   return (
     <div className=' h-full bg-sidebar  shadow-base  w-[228px] relative z-20'>
       {config.sidebarBgImage !== undefined && (
@@ -37,12 +34,9 @@ const SidebarNav = ({ menuList }: { menuList: Group[] }) => {
           style={{ backgroundImage: `url(${config.sidebarBgImage})` }}
         ></div>
       )}
-
-
       <ScrollArea className="[&>div>div[style]]:!block h-full" dir={direction}>
         <div className="px-4 space-y-3 mt-6">
-
-          <TeamSwitcher />
+  <TeamSwitcher />
           <SearchBar />
         </div>
         <div className='px-4 pt-6  sticky top-0  bg-sidebar z-20'>

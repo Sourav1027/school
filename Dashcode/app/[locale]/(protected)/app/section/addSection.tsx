@@ -106,7 +106,7 @@ const AddSection: React.FC<AddSectionProps> = ({ isOpen, onClose, onSuccess }) =
         }}
       >
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+          <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center gap-2 font-montserrat">
             <div className="h-8 w-2 bg-green-500 rounded-full" />
             Add New Section
           </DialogTitle>
@@ -116,7 +116,7 @@ const AddSection: React.FC<AddSectionProps> = ({ isOpen, onClose, onSuccess }) =
           {showAlert && (
             <Alert
               className={`${
-                alertType === 'success' ? 'bg-green-50 text-green-900 border-green-200' : 'bg-red-50 text-red-900 border-red-200'
+                alertType === 'success' ? 'bg-green-50 text-green-900 border-green-200' : 'bg-red-50 text-red-900 border-red-200 font-montserrat'
               }`}
             >
               <AlertDescription>{alertMessage}</AlertDescription>
@@ -124,16 +124,16 @@ const AddSection: React.FC<AddSectionProps> = ({ isOpen, onClose, onSuccess }) =
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="sectionName" className="text-sm font-medium text-gray-700">
+            <Label htmlFor="sectionName" className="text-sm font-medium text-gray-700 font-montserrat">
               Section Name
             </Label>
             <div className="relative">
-              <AdjustmentsHorizontalIcon className="w-5 h-5 absolute left-3 top-2 text-gray-500" />
+              <AdjustmentsHorizontalIcon className="w-5 h-5 absolute left-3 top-2 text-gray-500 font-montserrat" />
               <Input
                 id="sectionName"
                 value={sectionName}
                 onChange={(e) => setSectionName(e.target.value)}
-                className="pl-10 focus:ring-green-500 focus:border-green-500"
+                className="pl-10 focus:ring-green-500 focus:border-green-500 font-montserrat"
                 placeholder="Enter section name"
                 disabled={loading}
                 required
@@ -145,7 +145,7 @@ const AddSection: React.FC<AddSectionProps> = ({ isOpen, onClose, onSuccess }) =
             <Button
               type="submit"
               disabled={loading}
-              className="bg-green-500 hover:bg-green-600 text-white  h-8 text-sm px-3 py-1"
+              className="bg-green-500 hover:bg-green-600 text-white  h-8 text-sm px-3 py-1 font-montserrat"
             >
               <Save className="w-4 h-4 mr-2" />
               {loading ? 'Saving...' : 'Save Section'}
@@ -154,7 +154,7 @@ const AddSection: React.FC<AddSectionProps> = ({ isOpen, onClose, onSuccess }) =
               type="button"
               onClick={handleCancel}
               disabled={loading}
-              className="bg-red-500 hover:bg-red-600 text-white h-8 text-sm px-3 py-1"
+              className="bg-red-500 hover:bg-red-600 text-white h-8 text-sm px-3 py-1 font-montserrat"
             >
               <X className="w-4 h-4 mr-2" />
               Cancel

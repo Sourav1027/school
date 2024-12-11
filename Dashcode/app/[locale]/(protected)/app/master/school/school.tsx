@@ -148,12 +148,12 @@ const School: React.FC = () => {
       {/* ... Header Section (same as before) ... */}
       <div className="mb-2">
         <div className="flex justify-between items-center mb-2">
-          <h2 className="text-2xl font-bold text-gray-800">School Management</h2>
+          <h2 className="text-2xl font-bold text-gray-800 font-montserrat">School Management</h2>
           <div className="relative">
             <MagnifyingGlassIcon className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <Input
               placeholder="Search school..."
-              className="pl-10 w-[250px] bg-white border-gray-200 shadow-sm"
+              className="pl-10 w-[250px] bg-white border-gray-200 shadow-sm font-montserrat"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -172,7 +172,7 @@ const School: React.FC = () => {
               </SelectContent>
             </Select>
             <Button
-              className="bg-green-500 hover:bg-green-600 text-white"
+              className="bg-green-500 hover:bg-green-600 text-white font-montserrat"
               onClick={handleAddSchool}
             >
               <PlusIcon className="w-4 h-4 mr-2" />
@@ -186,25 +186,25 @@ const School: React.FC = () => {
         <Table>
           <TableHeader>
             <TableRow className="bg-gray-50">
-              <TableHead className="w-[100px] text-center py-4 px-6 text-gray-700 font-semibold border-b border-r">Sr No</TableHead>
-              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r">School Code</TableHead>
-              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r">School Name</TableHead>
-              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r">Principal Name</TableHead>
-              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r">Contact</TableHead>
-              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r">Landline</TableHead>
-              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r">Email</TableHead>
-              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r">Created At</TableHead>
-              <TableHead className="w-[100px] text-center py-4 px-6 text-gray-700 font-semibold border-b">Action</TableHead>
+              <TableHead className="w-[100px] text-center py-4 px-6 text-gray-700 font-semibold border-b border-r font-montserrat">Sr No</TableHead>
+              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r font-montserrat">School Code</TableHead>
+              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r font-montserrat">School Name</TableHead>
+              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r font-montserrat">Principal Name</TableHead>
+              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r font-montserrat">Contact</TableHead>
+              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r font-montserrat">Landline</TableHead>
+              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r font-montserrat">Email</TableHead>
+              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r font-montserrat">Created At</TableHead>
+              <TableHead className="w-[100px] text-center py-4 px-6 text-gray-700 font-semibold border-b font-montserrat">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {loading ? (
               <TableRow>
-                <TableCell colSpan={9} className="text-center py-4">Loading...</TableCell>
+                <TableCell colSpan={9} className="text-center py-4 font-montserrat">Loading...</TableCell>
               </TableRow>
             ) : schools.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={9} className="text-center py-4">
+                <TableCell colSpan={9} className="text-center py-4 font-montserrat">
                   No schools found
                 </TableCell>
               </TableRow>
@@ -217,22 +217,22 @@ const School: React.FC = () => {
                     key={school.txnId}
                     className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
                   >
-                    <TableCell className="py-4 px-6 text-center border-r font-medium text-gray-900">
+                    <TableCell className="py-4 px-6 text-center border-r font-medium text-gray-900 font-montserrat">
                       {(currentPage - 1) * parseInt(recordsPerPage) + index + 1}
                     </TableCell>
-                    <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.schoolCode}</TableCell>
-                    <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.name}</TableCell>
-                    <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.principleName}</TableCell>
-                    <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.contact}</TableCell>
-                    <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.landline}</TableCell>
-                    <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.email}</TableCell>
-                    <TableCell className="py-4 px-6 text-center border-r text-gray-700">{school.createdAt}</TableCell>
+                    <TableCell className="py-4 px-6 text-center border-r text-gray-700 font-montserrat">{school.schoolCode}</TableCell>
+                    <TableCell className="py-4 px-6 text-center border-r text-gray-700 font-montserrat">{school.name}</TableCell>
+                    <TableCell className="py-4 px-6 text-center border-r text-gray-700 font-montserrat">{school.principleName}</TableCell>
+                    <TableCell className="py-4 px-6 text-center border-r text-gray-700 font-montserrat">{school.contact}</TableCell>
+                    <TableCell className="py-4 px-6 text-center border-r text-gray-700 font-montserrat">{school.landline}</TableCell>
+                    <TableCell className="py-4 px-6 text-center border-r text-gray-700 font-montserrat">{school.email}</TableCell>
+                    <TableCell className="py-4 px-6 text-center border-r text-gray-700 font-montserrat">{school.createdAt}</TableCell>
                     <TableCell className="py-4 px-6">
                       <div className="flex justify-center gap-2">
                         <Button
                           variant="outline"
                           size="sm"
-                          className="border-blue-200 hover:bg-blue-50 text-blue-600"
+                          className="border-blue-200 hover:bg-blue-50 text-blue-600 font-montserrat"
                           onClick={() => handleEditSchool(school)}
                         >
                           <PencilIcon className="w-4 h-4" />
@@ -240,7 +240,7 @@ const School: React.FC = () => {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="border-red-200 hover:bg-red-50 text-red-600"
+                          className="border-red-200 hover:bg-red-50 text-red-600 font-montserrat"
 
                           onClick={() => {
                             console.log('Attempting to delete school with ID:', school.txnId); // Check the ID value
@@ -262,7 +262,7 @@ const School: React.FC = () => {
 
       {/* Pagination Section */}
       <div className="mt-3 flex justify-between items-center">
-        <div className="text-sm text-gray-600">
+        <div className="text-sm text-gray-600 font-montserrat">
           Showing {Math.min((currentPage - 1) * parseInt(recordsPerPage) + 1, totalRecords)} to{' '}
           {Math.min(currentPage * parseInt(recordsPerPage), totalRecords)} of {totalRecords} entries
         </div>
@@ -270,7 +270,7 @@ const School: React.FC = () => {
           <Button
             variant="outline"
             disabled={currentPage === 1}
-            className="border-gray-200 text-gray-600"
+            className="border-gray-200 text-gray-600 font-montserrat"
             onClick={() => setCurrentPage(currentPage - 1)}
           >
             ← Previous
@@ -279,7 +279,7 @@ const School: React.FC = () => {
             <Button
               key={i}
               variant="outline"
-              className={i + 1 === currentPage ? 'bg-blue-500 text-white' : 'border-gray-200 text-gray-600'}
+              className={i + 1 === currentPage ? 'bg-blue-500 text-white' : 'border-gray-200 text-gray-600 font-montserrat'}
               onClick={() => setCurrentPage(i + 1)}
             >
               {i + 1}
@@ -288,7 +288,7 @@ const School: React.FC = () => {
           <Button
             variant="outline"
             disabled={currentPage === totalPages}
-            className="border-gray-200 text-gray-600"
+            className="border-gray-200 text-gray-600 font-montserrat"
             onClick={() => setCurrentPage(currentPage + 1)}
           >
             Next →

@@ -15,10 +15,10 @@ import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/solid';
 import { GenderMale } from '@carbon/icons-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandsPraying } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+import { DropdownService, DropdownOption } from './dropdownService';
 
 const apiurl = process.env.NEXT_PUBLIC_SITE_URL;
-const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNWM2M2Y5Ny02MDM5LTRlMGEtYjljNy03YTMxZjAxZWE0NzkiLCJ1c2VybmFtZSI6ImRlZXAiLCJzY2hvb2xJZCI6Ijc1NzM2YjAxLWRkZDYtNGE0OS05YTY4LTIwMmE4MDBiZGM0NSIsImlhdCI6MTczMTY2MjM3MCwiZXhwIjoxNzMxNzQ4NzcwfQ.tbo7aiRqOy5Bk-OsBj2yVyDqXyxwLRQ2DPupw3imIs0";
-
 
 interface AddStudentFormProps {
     isOpen: boolean;
@@ -27,32 +27,6 @@ interface AddStudentFormProps {
 
 // Previous helper functions remain the same
 const getCurrentYear = () => new Date().getFullYear();
-const generateBatchOptions = () => {
-    const currentYear = getCurrentYear();
-    const batchOptions = [];
-    for (let startYear = 1900; startYear <= currentYear; startYear += 2) {
-        const endYear = startYear + 1;
-        batchOptions.push({
-            value: `${startYear}-${endYear}`,
-            label: `${startYear}-${endYear}`
-        });
-    }
-    return batchOptions;
-};
-
-const classOptions = Array.from({ length: 12 }, (_, i) => ({
-    value: String(i + 1),
-    label: `Class ${i + 1}`
-}));
-
-const divisionOptions = ['A', 'B', 'C', 'D'].map(div => ({
-    value: div.toLowerCase(),
-    label: div
-}));
-const sectionOptions = ['English', 'Hindi', 'Marathi',].map(section => ({
-    value: section.toLowerCase(),
-    label: section
-}));
 
 const bloodGroupOptions = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map(group => ({
     value: group.toLowerCase(),
@@ -138,18 +112,13 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
     const [photoPreview, setPhotoPreview] = useState<string | null>(null);
     const [photoFile, setPhotoFile] = useState<File | null>(null);
     const [isImagePreviewOpen, setIsImagePreviewOpen] = useState(false);
-
     const [activeTab, setActiveTab] = useState("general");
+    const [classOptions, setClassOptions] = useState<DropdownOption[]>([]);
+    const [divisionOptions, setDivisionOptions] = useState<DropdownOption[]>([]);
+    const [sectionOptions, setSectionOptions] = useState<DropdownOption[]>([]);
+    const [batchOptions, setBatchOptions] = useState<DropdownOption[]>([]);
 
-    const {
-        register,
-        handleSubmit,
-        reset,
-        setValue,
-        control,
-        watch,
-        formState: { errors },
-    } = useForm<StudentFormData>({
+    const { register, handleSubmit, reset, setValue, control, watch, formState: { errors }, } = useForm<StudentFormData>({
         resolver: zodResolver(studentSchema),
     });
 
@@ -173,21 +142,43 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
         }
     }, [sameAddress, correspondenceFields, setValue]);
 
+    // Fetch dropdown options on component mount
+    useEffect(() => {
+        const fetchDropdownOptions = async () => {
+            try {
+                const [classes, divisions, sections, batches] = await Promise.all([
+                    DropdownService.getClasses(),
+                    DropdownService.getDivisions(),
+                    DropdownService.getSections(),
+                    DropdownService.getBatches()
+                ]);
+
+                setClassOptions(classes);
+                setDivisionOptions(divisions);
+                setSectionOptions(sections);
+                setBatchOptions(batches);
+            } catch (error) {
+                console.error('Error fetching dropdown options:', error);
+            }
+        };
+
+        if (isOpen) {
+            fetchDropdownOptions();
+        }
+    }, [isOpen]);
+
+
+    // Existing submit handler
     const onSubmit = async (data: StudentFormData) => {
+        const token = localStorage.getItem("auth_token");
         try {
             setLoading(true);
-            const response = await fetch(`${apiurl}v1/student`, {
-                method: 'POST',
+            const response = await axios.post(`${apiurl}v1/student`, data, {
                 headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${jwtToken}`,
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
-                body: JSON.stringify(data),
             });
-
-            if (!response.ok) {
-                throw new Error('Failed to create student');
-            }
 
             reset();
             onClose();
@@ -218,15 +209,15 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
     return (
         <Dialog open={isOpen} onOpenChange={handleClose}>
             <DialogContent className="flex flex-col p-6 absolute top-0 left-0 right-0 inset-0 mx-auto max-w-full h-auto overflow-y-auto bg-white shadow-lg rounded-lg"
-                style={{ marginTop: '0px', transform: 'none', maxWidth: '1400px', width: '90%', height: '85vh' }}
+                style={{ marginTop: '0px', transform: 'none', maxWidth: '1400px', width: '90%', height: '92vh' }}
                 onPointerDownOutside={(e) => {
                     e.preventDefault(); // Prevent closing on click outside
-                  }}
-                  onInteractOutside={(e) => {
+                }}
+                onInteractOutside={(e) => {
                     e.preventDefault(); // Prevent any interaction outside
-                  }}>
+                }}>
                 <DialogHeader className="px-6 py-4 border-b sticky top-0">
-                    <DialogTitle className="text-xl font-semibold">Add New Student</DialogTitle>
+                    <DialogTitle className="text-xl font-semibold font-montserrat">Add New Student</DialogTitle>
                 </DialogHeader>
 
                 <div className="flex-1 overflow-y-auto ">
@@ -236,8 +227,8 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
                                 <TabsTrigger
                                     value="general"
                                     className={`${activeTab === 'general'
-                                        ? 'border-b-2 border-b-blue-500 text-blue-500 shadow-md shadow-blue-500/50'
-                                        : 'border-b-2 border-b-gray-300 text-gray-500 hover:text-gray-700'
+                                        ? 'border-b-2 border-b-blue-500 text-blue-500 shadow-md shadow-blue-500/50 font-montserrat'
+                                        : 'border-b-2 border-b-gray-300 text-gray-500 hover:text-gray-700 font-montserrat'
                                         } px-4 py-2 font-medium`}
                                     onClick={() => setActiveTab('general')}
                                 >
@@ -246,15 +237,15 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
                                 <TabsTrigger
                                     value="address"
                                     className={`${activeTab === 'address'
-                                        ? 'border-b-2 border-b-blue-500 text-blue-500 shadow-md shadow-blue-500/50'
-                                        : 'border-b-2 border-b-gray-300 text-gray-500 hover:text-gray-700'
+                                        ? 'border-b-2 border-b-blue-500 text-blue-500 shadow-md shadow-blue-500/50 font-montserrat'
+                                        : 'border-b-2 border-b-gray-300 text-gray-500 hover:text-gray-700 font-montserrat'
                                         } px-4 py-2 font-medium`}
                                     onClick={() => setActiveTab('address')}
                                 >
                                     Address Details
                                 </TabsTrigger>
                             </TabsList>
-                        
+
                             <TabsContent value="general" className="space-y-6">
                                 {/* Photo Upload Section */}
                                 <div className="flex gap-8">
@@ -284,7 +275,7 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
                                         <div className="grid grid-cols-2 gap-4">
                                             <div className="relative">
                                                 <Hash className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                                <Input {...register('grNumber')} placeholder="GR Number" className="pl-10" />
+                                                <Input {...register('grNumber')} placeholder="GR Number" className="pl-10 font-montserrat font-montserrat" />
                                                 {errors.grNumber && <p className="text-red-500 text-sm mt-1">{errors.grNumber.message}</p>}
                                             </div>
 
@@ -311,23 +302,23 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
                                         <div className="grid grid-cols-4 gap-4">
                                             <div className="relative">
                                                 <User className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                                <Input {...register('firstName')} placeholder="First Name" className="pl-10" />
+                                                <Input {...register('firstName')} placeholder="First Name" className="pl-10 font-montserrat" />
                                                 {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName.message}</p>}
                                             </div>
 
                                             <div className="relative">
                                                 <User className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                                <Input {...register('lastName')} placeholder="Last Name" className="pl-10" />
+                                                <Input {...register('lastName')} placeholder="Last Name" className="pl-10 font-montserrat" />
                                                 {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName.message}</p>}
                                             </div>
                                             <div className="relative">
                                                 <Users className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                                <Input {...register('fatherName')} placeholder="Father's Name" className="pl-10" />
+                                                <Input {...register('fatherName')} placeholder="Father's Name" className="pl-10 font-montserrat" />
                                                 {errors.fatherName && <p className="text-red-500 text-sm mt-1">{errors.fatherName.message}</p>}
                                             </div>
                                             <div className="relative">
                                                 <Users className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                                <Input {...register('motherName')} placeholder="Mother's Name" className="pl-10" />
+                                                <Input {...register('motherName')} placeholder="Mother's Name" className="pl-10 font-montserrat" />
                                                 {errors.motherName && <p className="text-red-500 text-sm mt-1">{errors.motherName.message}</p>}
                                             </div>
 
@@ -337,7 +328,7 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
                                             <div className="relative">
                                                 <GenderMale className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
                                                 <Select {...register('gender')}>
-                                                    <SelectTrigger className="pl-10">
+                                                    <SelectTrigger className="pl-10 font-montserrat">
                                                         <SelectValue placeholder="Select Gender" />
                                                     </SelectTrigger>
                                                     <SelectContent>
@@ -351,7 +342,7 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
                                             <div className="relative">
                                                 <Droplet className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
                                                 <Select {...register('bloodGroup')}>
-                                                    <SelectTrigger className="pl-10">
+                                                    <SelectTrigger className="pl-10 font-montserrat">
                                                         <SelectValue placeholder="Blood Group" />
                                                     </SelectTrigger>
                                                     <SelectContent>
@@ -385,12 +376,14 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
                                             <div className="relative">
                                                 <CalendarDaysIcon className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
                                                 <Select {...register('batch')}>
-                                                    <SelectTrigger className="pl-10">
+                                                    <SelectTrigger className="pl-10 font-montserrat">
                                                         <SelectValue placeholder="Select Batch" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        {generateBatchOptions().map((option) => (
-                                                            <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
+                                                        {batchOptions.map((option) => (
+                                                            <SelectItem key={option.value} value={option.value}>
+                                                                {option.label}
+                                                            </SelectItem>
                                                         ))}
                                                     </SelectContent>
                                                 </Select>
@@ -401,19 +394,21 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
                                         <div className="grid grid-cols-4 gap-4">
                                             <div className="relative">
                                                 <Hash className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                                <Input {...register('rollNumber')} placeholder="Roll Number" className="pl-10" />
+                                                <Input {...register('rollNumber')} placeholder="Roll Number" className="pl-10 font-montserrat" />
                                                 {errors.rollNumber && <p className="text-red-500 text-sm mt-1">{errors.rollNumber.message}</p>}
                                             </div>
 
                                             <div className="relative">
                                                 <BookOpen className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
                                                 <Select {...register('class')}>
-                                                    <SelectTrigger className="pl-10">
+                                                    <SelectTrigger className="pl-10 font-montserrat">
                                                         <SelectValue placeholder="Select Class" />
                                                     </SelectTrigger>
                                                     <SelectContent>
                                                         {classOptions.map((option) => (
-                                                            <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
+                                                            <SelectItem key={option.value} value={option.value}>
+                                                                {option.label}
+                                                            </SelectItem>
                                                         ))}
                                                     </SelectContent>
                                                 </Select>
@@ -423,12 +418,14 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
                                             <div className="relative">
                                                 <BookOpen className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
                                                 <Select {...register('division')}>
-                                                    <SelectTrigger className="pl-10">
+                                                    <SelectTrigger className="pl-10 font-montserrat">
                                                         <SelectValue placeholder="Select Division" />
                                                     </SelectTrigger>
                                                     <SelectContent>
                                                         {divisionOptions.map((option) => (
-                                                            <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
+                                                            <SelectItem key={option.value} value={option.value}>
+                                                                {option.label}
+                                                            </SelectItem>
                                                         ))}
                                                     </SelectContent>
                                                 </Select>
@@ -437,12 +434,14 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
                                             <div className="relative">
                                                 <AdjustmentsHorizontalIcon className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
                                                 <Select {...register('section')}>
-                                                    <SelectTrigger className="pl-10">
+                                                    <SelectTrigger className="pl-10 font-montserrat">
                                                         <SelectValue placeholder="Select Section" />
                                                     </SelectTrigger>
                                                     <SelectContent>
                                                         {sectionOptions.map((option) => (
-                                                            <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
+                                                            <SelectItem key={option.value} value={option.value}>
+                                                                {option.label}
+                                                            </SelectItem>
                                                         ))}
                                                     </SelectContent>
                                                 </Select>
@@ -457,7 +456,7 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
                                         <div className="relative">
                                             <BookOpen className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
                                             <Select {...register('category')}>
-                                                <SelectTrigger className="pl-10">
+                                                <SelectTrigger className="pl-10 font-montserrat">
                                                     <SelectValue placeholder="Select category" />
                                                 </SelectTrigger>
                                                 <SelectContent>
@@ -471,17 +470,17 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
 
                                         <div className="relative">
                                             <Hash className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                            <Input {...register('sscBoard')} placeholder="SSC Board" className="pl-10" />
+                                            <Input {...register('sscBoard')} placeholder="SSC Board" className="pl-10 font-montserrat" />
                                             {errors.sscBoard && <p className="text-red-500 text-sm mt-1">{errors.sscBoard.message}</p>}
                                         </div>
                                         <div className="relative">
                                             <Hash className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                            <Input {...register('sscSeatNo')} placeholder="SSC Seat No" className="pl-10" />
+                                            <Input {...register('sscSeatNo')} placeholder="SSC Seat No" className="pl-10 font-montserrat" />
                                             {errors.sscSeatNo && <p className="text-red-500 text-sm mt-1">{errors.sscSeatNo.message}</p>}
                                         </div>
                                         <div className="relative">
                                             <Hash className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                            <Input {...register('aadharNumber')} type="text" placeholder="Aadhar Number" className="pl-10" />
+                                            <Input {...register('aadharNumber')} type="text" placeholder="Aadhar Number" className="pl-10 font-montserrat" />
                                             {errors.aadharNumber && <p className="text-red-500 text-sm mt-1">{errors.aadharNumber.message}</p>}
                                         </div>
                                     </div>
@@ -490,38 +489,38 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
 
                                         <div className="relative">
                                             <Building className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                            <Input {...register('fatherOccupation')} placeholder="Father's Occupation" className="pl-10" />
+                                            <Input {...register('fatherOccupation')} placeholder="Father's Occupation" className="pl-10 font-montserrat" />
                                             {errors.fatherOccupation && <p className="text-red-500 text-sm mt-1">{errors.fatherOccupation.message}</p>}
                                         </div>
 
                                         <div className="relative">
                                             <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                            <Input {...register('fatherMobile')} placeholder="Father's Mobile Number" className="pl-10" />
+                                            <Input {...register('fatherMobile')} placeholder="Father's Mobile Number" className="pl-10 font-montserrat" />
                                             {errors.fatherMobile && <p className="text-red-500 text-sm mt-1">{errors.fatherMobile.message}</p>}
                                         </div>
 
                                         <div className="relative">
                                             <Building className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                            <Input {...register('motherOccupation')} placeholder="Mother's Occupation" className="pl-10" />
+                                            <Input {...register('motherOccupation')} placeholder="Mother's Occupation" className="pl-10 font-montserrat" />
                                             {errors.motherOccupation && <p className="text-red-500 text-sm mt-1">{errors.motherOccupation.message}</p>}
                                         </div>
 
                                         <div className="relative">
                                             <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                            <Input {...register('motherMobile')} placeholder="Mother's Mobile Number" className="pl-10" />
+                                            <Input {...register('motherMobile')} placeholder="Mother's Mobile Number" className="pl-10 font-montserrat" />
                                             {errors.motherMobile && <p className="text-red-500 text-sm mt-1">{errors.motherMobile.message}</p>}
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-4 gap-4">
                                         <div className="relative">
                                             <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                            <Input {...register('email')} type="email" placeholder="Parent Email" className="pl-10" />
+                                            <Input {...register('email')} type="email" placeholder="Parent Email" className="pl-10 font-montserrat" />
                                             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
                                         </div>
                                         <div className="relative">
                                             <FontAwesomeIcon icon={faHandsPraying} className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
                                             <Select {...register('religion')}>
-                                                <SelectTrigger className="pl-10">
+                                                <SelectTrigger className="pl-10 font-montserrat">
                                                     <SelectValue placeholder="Select Religion" />
                                                 </SelectTrigger>
                                                 <SelectContent>
@@ -535,7 +534,7 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
                                         <div className="relative">
                                             <FontAwesomeIcon icon={faHandsPraying} className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
                                             <Select {...register('caste')}>
-                                                <SelectTrigger className="pl-10">
+                                                <SelectTrigger className="pl-10 font-montserrat">
                                                     <SelectValue placeholder="Select caste" />
                                                 </SelectTrigger>
                                                 <SelectContent>
@@ -548,7 +547,7 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
                                         </div>
                                         <div className="relative">
                                             <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                            <Input {...register('placeOfBirth')} type="text" placeholder="Place of Birth" className="pl-10" />
+                                            <Input {...register('placeOfBirth')} type="text" placeholder="Place of Birth" className="pl-10 font-montserrat" />
                                             {errors.placeOfBirth && <p className="text-red-500 text-sm mt-1">{errors.placeOfBirth.message}</p>}
                                         </div>
                                     </div>
@@ -563,13 +562,13 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                         <div className="relative">
                                             <Home className="absolute left-3 top-3 h-4 w-4 text-black" />
-                                            <Input {...register('correspondenceAddress1')} placeholder="Address Line 1" className="pl-10 text-black" />
+                                            <Input {...register('correspondenceAddress1')} placeholder="Address Line 1" className="pl-10 font-montserrat text-black" />
                                             {errors.correspondenceAddress1 && <p className="text-red-500 text-sm mt-1">{errors.correspondenceAddress1.message}</p>}
                                         </div>
 
                                         <div className="relative">
                                             <Home className="absolute left-3 top-3 h-4 w-4 text-black" />
-                                            <Input {...register('correspondenceAddress2')} placeholder="Address Line 2" className="pl-10 text-black" />
+                                            <Input {...register('correspondenceAddress2')} placeholder="Address Line 2" className="pl-10 font-montserrat text-black" />
                                         </div>
                                         <div className="relative">
                                             <Home className="absolute left-3 top-3 h-4 w-4 text-black" />
@@ -608,14 +607,14 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
                                             setSameAddress(checked as boolean);
                                         }}
                                     />
-                                    <label htmlFor="sameAddress" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                    <label htmlFor="sameAddress" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-montserrat">
                                         Same as Correspondence Address
                                     </label>
                                 </div>
 
                                 {/* Permanent Address */}
                                 <div className="space-y-4 p-4 border rounded-lg">
-                                    <h3 className="font-medium">Permanent Address</h3>
+                                    <h3 className="font-medium pl-10 font-montserrat">Permanent Address</h3>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                         <div className="relative">
                                             <Home className="absolute left-3 top-3 h-4 w-4 text-black" />
@@ -637,18 +636,18 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
 
                                         <div className="relative">
                                             <Building className="absolute left-3 top-3 h-4 w-4 text-black" />
-                                            <Input {...register('permanentCity')} placeholder="City" className="pl-10 text-black" disabled={sameAddress} />
+                                            <Input {...register('permanentCity')} placeholder="City" className="pl-10 font-montserrat  text-black" disabled={sameAddress} />
                                             {errors.permanentCity && <p className="text-red-500 text-sm mt-1">{errors.permanentCity.message}</p>}
                                         </div>
 
                                         <div className="relative">
                                             <MapPin className="absolute left-3 top-3 h-4 w-4 text-black" />
-                                            <Input {...register('permanentState')} placeholder="State" className="pl-10 text-black" disabled={sameAddress} />
+                                            <Input {...register('permanentState')} placeholder="State" className="pl-10 font-montserrat text-black" disabled={sameAddress} />
                                             {errors.permanentState && <p className="text-red-500 text-sm mt-1">{errors.permanentState.message}</p>}
                                         </div>
                                         <div className="relative">
                                             <Hash className="absolute left-3 top-3 h-4 w-4 text-black" />
-                                            <Input {...register('permanentPincode')} placeholder="Pincode" className="pl-10 text-black" disabled={sameAddress} />
+                                            <Input {...register('permanentPincode')} placeholder="Pincode" className="pl-10 font-montserrat text-black" disabled={sameAddress} />
                                             {errors.permanentPincode && <p className="text-red-500 text-sm mt-1">{errors.permanentPincode.message}</p>}
                                         </div>
                                     </div>
@@ -657,11 +656,11 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
                         </Tabs>
 
                         <DialogFooter className="mt-6 flex gap-2 justify-self-start">
-                            <Button type="submit" disabled={loading} className="bg-green-600 hover:bg-green-700 h-8 text-sm px-3 py-1">
+                            <Button type="submit" disabled={loading} className="bg-green-600 hover:bg-green-700 h-8 text-sm px-3 py-1 font-montserrat">
                                 <Save className="w-4 h-4 mr-2" />
                                 {loading ? 'Saving...' : 'Save Student'}
                             </Button>
-                            <Button type="button" disabled={loading} onClick={handleClose} className="bg-red-600 hover:bg-red-700 text-white h-8 text-sm px-3 py-1">
+                            <Button type="button" disabled={loading} onClick={handleClose} className="bg-red-600 hover:bg-red-700 text-white h-8 text-sm px-3 py-1 font-montserrat">
                                 <X className="w-4 h-4 mr-2" />
                                 Cancel
                             </Button>
@@ -673,7 +672,7 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
                 <Dialog open={isImagePreviewOpen} onOpenChange={setIsImagePreviewOpen}>
                     <DialogContent className="max-w-3xl">
                         <DialogHeader>
-                            <DialogTitle>Photo Preview</DialogTitle>
+                            <DialogTitle className="font-montserrat">Photo Preview</DialogTitle>
                         </DialogHeader>
                         <div className="flex justify-center items-center p-4">
                             <img src={photoPreview}
@@ -684,7 +683,7 @@ const AddStudentForm: React.FC<AddStudentFormProps> = ({ isOpen, onClose }) => {
                         <DialogFooter>
                             <Button
                                 onClick={() => setIsImagePreviewOpen(false)}
-                                className="bg-gray-600 hover:bg-gray-700"
+                                className="bg-gray-600 hover:bg-gray-700 font-montserrat"
                             >
                                 Close
                             </Button>

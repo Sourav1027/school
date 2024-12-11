@@ -1,76 +1,153 @@
 "use client"
-import {
-  DropdownMenu,  
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { useState, useEffect } from 'react';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, 
+  DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, 
+  DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, 
+  DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Icon } from "@/components/ui/icon"
-import { signOut, auth } from "@/lib/auth";
 import Image from "next/image";
 import { Link } from '@/i18n/routing';
-import { Button } from "@/components/ui/button";
 import { useRouter } from "@/components/navigation";
 
-const ProfileInfo =  () => {
-  // const session = await auth();
-  const router = useRouter();
-
-const handleLogout=()=>{
-router.push("/");
+// Define user type for TypeScript
+interface User {
+  name: string;
+  email: string;
+  image: string;
 }
+
+const ProfileInfo = () => {
+  const router = useRouter();
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const DEFAULT_AVATAR = "/images/users/user-3.jpg"; 
+
+  // Centralized function to get auth token
+  const getAuthToken = () => {
+    return localStorage.getItem("auth_token");
+  };
+
+  // Centralized function to remove auth token
+  const removeAuthToken = () => {
+    localStorage.removeItem("auth_token");
+  };
+
+  // Fetch user details
+  const fetchUserDetails = async () => {
+    const token = getAuthToken();
+    if (!token) {
+      // Redirect to login if no token
+      router.push("/");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}v1/users/detail`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        // If response is not successful, remove token and redirect to login
+        removeAuthToken();
+        router.push("/");
+        return;
+      }
+
+      const userData = await response.json();
+      setUser(userData);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+      removeAuthToken();
+      router.push("/");
+    }
+  };
+
+  // Handle logout 
+  const handleLogout = () => {
+    try {
+      // Optional: Call logout API if your backend requires it
+      fetch(`${process.env.NEXT_PUBLIC_SITE_URL}v1/auth/logout`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${getAuthToken()}`,
+          'Content-Type': 'application/json',
+        },
+      });
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      // Always remove token and redirect
+      removeAuthToken();
+      router.push("/");
+    }
+  };
+
+  // Fetch user details on component mount
+  useEffect(() => {
+    fetchUserDetails();
+  }, []);
+
+  // Loading state
+  if (isLoading) {
+    return <div className="md:block hidden">Loading...</div>;
+  }
+
+  // If no user, don't render the dropdown
+  if (!user) {
+    return null;
+  }
 
   return (
     <div className="md:block hidden">
       <DropdownMenu>
-        <DropdownMenuTrigger asChild className=" cursor-pointer">
-          <div className=" flex items-center gap-3  text-default-800 ">
+        <DropdownMenuTrigger asChild className="cursor-pointer">
+          <div className="flex items-center gap-3 text-default-800">
+            <Image
+              src={user.image}
+              alt={user.name?.charAt(0) || 'U'}
+              className="rounded-full h-10 w-10 "
+              onError={(e) => {
+                // Fallback to default image if image fails to load
+                (e.target as HTMLImageElement).src = DEFAULT_AVATAR;
+              }}
+            />
 
-            {/* <Image
-              src={session?.user?.image as string}
-              alt={session?.user?.name?.charAt(0) as string}
-              width={36}
-              height={36}
-              className="rounded-full"
-            /> */}
-{/* 
-            <div className="text-sm font-medium  capitalize lg:block hidden  ">
-              {session?.user?.name}
-            </div> */}
-            <span className="text-base  me-2.5 lg:inline-block hidden">
-              <Icon icon="heroicons-outline:chevron-down"></Icon>
+            <div className="text-sm font-medium capitalize lg:block hidden">
+              {user.name}
+            </div>
+            <span className="text-base me-2.5 lg:inline-block hidden">
+              <Icon icon="heroicons-outline:chevron-down" />
             </span>
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56 p-0" align="end">
           <DropdownMenuLabel className="flex gap-2 items-center mb-1 p-3">
-
-            {/* <Image
-              src={session?.user?.image as string}
-              alt={session?.user?.name?.charAt(0) as string}
-              width={36}
-              height={36}
-              className="rounded-full"
-            /> */}
-
-            {/* <div>
-              <div className="text-sm font-medium text-default-800 capitalize ">
-                {session?.user?.name}
+            <Image
+              src={user.image}
+              alt={user.name?.charAt(0) || 'U'}
+              className="rounded-full h-10 w-10 "
+              onError={(e) => {
+                // Fallback to default image if image fails to load
+                (e.target as HTMLImageElement).src = DEFAULT_AVATAR;
+              }}
+            />
+            <div>
+              <div className="text-sm font-medium text-default-800 capitalize">
+                {user.name}
               </div>
               <Link
                 href="/dashboard"
                 className="text-xs text-default-600 hover:text-primary"
               >
-                {session?.user?.email}
+                {user.email}
               </Link>
-            </div> */}
+            </div>
           </DropdownMenuLabel>
           <DropdownMenuGroup>
             {[
@@ -123,15 +200,8 @@ router.push("/");
               <DropdownMenuPortal>
                 <DropdownMenuSubContent>
                   {[
-                    {
-                      name: "email",
-                    },
-                    {
-                      name: "message",
-                    },
-                    {
-                      name: "facebook",
-                    },
+                    { name: "email" },
+                    { name: "message" },
                   ].map((item, index) => (
                     <Link
                       href="/dashboard"
@@ -161,15 +231,9 @@ router.push("/");
               <DropdownMenuPortal>
                 <DropdownMenuSubContent>
                   {[
-                    {
-                      name: "portal",
-                    },
-                    {
-                      name: "slack",
-                    },
-                    {
-                      name: "whatsapp",
-                    },
+                    { name: "portal" },
+                    { name: "slack" },
+                    { name: "whatsapp" },
                   ].map((item, index) => (
                     <Link href="/dashboard" key={`message-sub-${index}`}>
                       <DropdownMenuItem className="text-sm font-medium text-default-600 capitalize px-3 py-1.5 cursor-pointer">
@@ -183,16 +247,17 @@ router.push("/");
           </DropdownMenuGroup>
           <DropdownMenuSeparator className="mb-0 dark:bg-background" />
           <DropdownMenuItem
-
             className="flex items-center gap-2 text-sm font-medium text-default-600 capitalize my-1 px-3 cursor-pointer"
           >
-
             <div>
-             
-                <button onClick={handleLogout} type="submit" className=" w-full  flex  items-center gap-2" >
-                  <Icon icon="heroicons:power" className="w-4 h-4" />
-                  Log out
-                </button>
+              <button 
+                onClick={handleLogout} 
+                type="button" 
+                className="w-full flex items-center gap-2"
+              >
+                <Icon icon="heroicons:power" className="w-4 h-4" />
+                Log out
+              </button>
             </div>
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -200,4 +265,5 @@ router.push("/");
     </div>
   );
 };
+
 export default ProfileInfo;

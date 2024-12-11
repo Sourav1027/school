@@ -1,24 +1,15 @@
 "use client";
-
 import React from 'react'
 import Logo from '@/components/logo';
 import SidebarHoverToggle from '@/components/partials/sidebar/sidebar-hover-toggle';
 import { Ellipsis, LogOut } from "lucide-react";
 import { usePathname } from "@/components/navigation";
-
 import { cn } from "@/lib/utils";
 import { getMenuList } from "@/lib/menus";
-
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-    Tooltip,
-    TooltipTrigger,
-    TooltipContent,
-    TooltipProvider
-} from "@/components/ui/tooltip";
+import {   Tooltip,   TooltipTrigger,   TooltipContent,   TooltipProvider} from "@/components/ui/tooltip";
 import { useConfig } from "@/hooks/use-config";
 import MenuLabel from "../common/menu-label";
-
 import MenuItem from "../common/menu-item";
 import { CollapseMenuButton } from "../common/collapse-menu-button";
 import MenuWidget from "../common/menu-widget";
@@ -26,28 +17,10 @@ import SearchBar from '@/components/partials/sidebar/common/search-bar'
 import TeamSwitcher from '../common/team-switcher'
 
 // for dnd 
-import {
-    DndContext,
-    KeyboardSensor,
-    MouseSensor,
-    TouchSensor,
-    closestCenter,
-    useSensor,
-    type DragEndEvent,
-    type UniqueIdentifier,
-    useSensors,
+import {DndContext,KeyboardSensor,MouseSensor,TouchSensor,closestCenter,useSensor,type DragEndEvent,type UniqueIdentifier,useSensors,
 } from "@dnd-kit/core";
-import {
-    restrictToVerticalAxis,
-    restrictToHorizontalAxis,
-} from "@dnd-kit/modifiers";
-import {
-    useSortable,
-    arrayMove,
-    SortableContext,
-    verticalListSortingStrategy,
-    horizontalListSortingStrategy,
-} from "@dnd-kit/sortable";
+import {restrictToVerticalAxis,restrictToHorizontalAxis,} from "@dnd-kit/modifiers";
+import { useSortable, arrayMove, SortableContext, verticalListSortingStrategy,horizontalListSortingStrategy,} from "@dnd-kit/sortable";
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation'
 import { getLangDir } from 'rtl-detect';

@@ -69,13 +69,13 @@ const Data = () => {
   return (
     <div className="w-full">
       <div className="flex items-center py-4 px-5">
-        <div className="flex-1 text-xl font-medium text-gray-900">
-          Students Records
+        <div className="flex-1 text-xl font-medium text-gray-900 font-montserrat">
+          School Records
         </div>
         <div className="flex-none">
           <input
             type="text"
-            placeholder="Search by Student name..."
+            placeholder="Search by school name..."
             className="px-4 py-2 border rounded-lg"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -87,28 +87,28 @@ const Data = () => {
         <table className="w-full text-sm text-left text-gray-500">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
-              <th className="px-6 py-3">S.No</th>
-              <th className="px-6 py-3">GR No</th>
-              <th className="px-6 py-3">Student Name</th>
-              <th className="px-6 py-3">Class</th>
-              <th className="px-6 py-3">Section</th>
-              <th className="px-6 py-3">Father Name</th>
-              <th className="px-6 py-3">Contact Info</th>
-              <th className="px-6 py-3">Gender</th>
-              <th className="px-6 py-3">Category</th>
-              <th className="px-6 py-3">Actions</th>
+              <th className="px-6 py-3 font-montserrat">S.No</th>
+              <th className="px-6 py-3 font-montserrat">School ID</th>
+              <th className="px-6 py-3 font-montserrat">School Code</th>
+              <th className="px-6 py-3 font-montserrat">School Name</th>
+              <th className="px-6 py-3 font-montserrat">Address</th>
+              <th className="px-6 py-3 font-montserrat">Principal</th>
+              <th className="px-6 py-3 font-montserrat">Contact Info</th>
+              <th className="px-6 py-3 font-montserrat">Medium</th>
+              <th className="px-6 py-3 font-montserrat">Board</th>
+              <th className="px-6 py-3 font-montserrat">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {filteredData.length === 0 ? (  
+            {filteredData.length === 0 ? (
               <tr>
                 <td colSpan={10} className="px-6 py-16 text-center">
                   <div className="flex flex-col items-center justify-center">
-                    <span className="text-gray-500 text-lg font-medium">
-                      No Student Found
+                    <span className="text-gray-500 text-lg font-medium font-montserrat">
+                      No Schools Found
                     </span>
-                    <span className="text-gray-400 text-sm mt-1">
-                      There are no Students records to display
+                    <span className="text-gray-400 text-sm mt-1 font-montserrat">
+                      There are no school records to display
                     </span>
                   </div>
                 </td>
@@ -116,28 +116,28 @@ const Data = () => {
             ) : (
               filteredData.map((school, index) => (
                 <tr key={school.id} className="bg-white border-b hover:bg-gray-50">
-                  <td className="px-6 py-4 font-medium">{index + 1}</td>
-                  <td className="px-6 py-4">{school.schoolId}</td>
-                  <td className="px-6 py-4">{school.schoolCode}</td>
-                  <td className="px-6 py-4">{school.name}</td>
-                  <td className="px-6 py-4">{school.address}</td>
-                  <td className="px-6 py-4">{school.principalName}</td>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 font-medium font-montserrat">{index + 1}</td>
+                  <td className="px-6 py-4 font-montserrat">{school.schoolId}</td>
+                  <td className="px-6 py-4 font-montserrat">{school.schoolCode}</td>
+                  <td className="px-6 py-4 font-montserrat">{school.name}</td>
+                  <td className="px-6 py-4 font-montserrat">{school.address}</td>
+                  <td className="px-6 py-4 font-montserrat">{school.principalName}</td>
+                  <td className="px-6 py-4 font-montserrat">
                     <div className="flex flex-col">
                       <span>{school.contactNo}</span>
                       {school.landlineNo && (
-                        <span className="text-gray-400">{school.landlineNo}</span>
+                        <span className="text-gray-400 font-montserrat">{school.landlineNo}</span>
                       )}
-                      <span className="text-gray-400">{school.email}</span>
+                      <span className="text-gray-400 font-montserrat">{school.email}</span>
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <span className="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800">
+                    <span className="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800 font-montserrat">
                       {school.medium}
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <span className="px-2 py-1 rounded-full text-xs bg-purple-100 text-purple-800">
+                    <span className="px-2 py-1 rounded-full text-xs bg-purple-100 text-purple-800 font-montserrat">
                       {school.board.toUpperCase()}
                     </span>
                   </td>
@@ -145,19 +145,19 @@ const Data = () => {
                     <div className="flex space-x-3">
                       <button
                         onClick={() => handleView(school.id)}
-                        className="text-gray-600 hover:text-gray-900"
+                        className="text-gray-600 hover:text-gray-900 font-montserrat"
                       >
                         <Eye className="w-5 h-5" />
                       </button>
                       <button
                         onClick={() => handleEdit(school.id)}
-                        className="text-blue-600 hover:text-blue-900"
+                        className="text-blue-600 hover:text-blue-900 font-montserrat"
                       >
                         <Pencil className="w-5 h-5" />
                       </button>
                       <button
                         onClick={() => handleDelete(school.id)}
-                        className="text-red-600 hover:text-red-900"
+                        className="text-red-600 hover:text-red-900 font-montserrat"
                       >
                         <Trash2 className="w-5 h-5" />
                       </button>

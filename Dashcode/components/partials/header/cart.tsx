@@ -14,7 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ProductCounterButton from "@/components/ecommarce/product-counter-button";
-
+  
 export function Cart() {
     const cartProducts = [
         {

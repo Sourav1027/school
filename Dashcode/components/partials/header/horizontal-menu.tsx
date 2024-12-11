@@ -7,34 +7,16 @@ import { useConfig } from '@/hooks/use-config'
 import { useTranslations } from 'next-intl';
 import { getHorizontalMenuList } from "@/lib/menus";
 import { Icon } from "@/components/ui/icon";
-import {
-  Menubar,
-  MenubarCheckboxItem,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarRadioGroup,
-  MenubarRadioItem,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarSub,
-  MenubarSubContent,
-  MenubarSubTrigger,
-  MenubarTrigger,
-} from "@/components/ui/menubar"
+import {Menubar,MenubarCheckboxItem,MenubarContent,MenubarItem,MenubarMenu,MenubarRadioGroup,MenubarRadioItem,MenubarSeparator,MenubarShortcut,
+  MenubarSub,MenubarSubContent, MenubarSubTrigger, MenubarTrigger,} from "@/components/ui/menubar"
 import { useMediaQuery } from "@/hooks/use-media-query";
 
 export default function HorizontalMenu() {
-
   const [config] = useConfig()
-
   const t = useTranslations("Menu");
   const pathname = usePathname();
-
   const menuList = getHorizontalMenuList(pathname, t)
-
   const [openDropdown, setOpenDropdown] = React.useState<boolean>(false);
-
   const isDesktop = useMediaQuery('(min-width: 1280px)')
 
   if (config.layout !== 'horizontal' || !isDesktop) return null

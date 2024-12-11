@@ -19,6 +19,9 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        montserrat: ['Montserrat', 'sans-serif'],
+      },
        colors: {
         customBlue: '#A3B7F4',
         border: "hsl(var(--border))",

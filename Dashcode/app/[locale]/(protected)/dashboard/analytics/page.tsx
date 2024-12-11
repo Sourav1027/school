@@ -18,14 +18,14 @@ const DashboardPage = () => {
           <div className="2xl:col-span-3 lg:col-span-4 col-span-12">
             <WelcomeBlock>
               <div className="max-w-[180px] relative z-10">
-                <div className="text-xl font-medium text-default-900 dark:text-default-100 mb-2">
+                <div className="text-xl font-medium text-default-900 dark:text-default-100 mb-2 font-montserrat">
                   {t("widget_title")}
                 </div>
-                <p className="text-sm text-default-800 dark:text-default-100">
+                <p className="text-sm text-default-800 dark:text-default-100 font-montserrat">
                   {t("widget_desc")}
                 </p>
               </div>
-              <BlockBadge className="end-3">{t("widget_badge")}</BlockBadge>
+              <BlockBadge className="end-3 font-montserrat">{t("widget_badge")}</BlockBadge>
               <Image
                 src="/images/all-img/widget-bg-1.png"
                 width={400}
@@ -43,18 +43,18 @@ const DashboardPage = () => {
                   <StatisticsBlock
                     title={t("revenue_chart_title")}
                     total="3,564"
-                    className="bg-info/10 border-none shadow-none"
+                    className="bg-info/10 border-none shadow-none font-montserrat"
                   />
                   <StatisticsBlock
                     title={t("sold_chart_title")}
                     total="564"
-                    className="bg-warning/10 border-none shadow-none"
+                    className="bg-warning/10 border-none shadow-none font-montserrat"
                     chartColor="#FB8F65"
                   />
                   <StatisticsBlock
                     title={t("growth_chart_title")}
                     total="+5.0%"
-                    className="bg-primary/10 border-none shadow-none"
+                    className="bg-primary/10 border-none shadow-none font-montserrat"
                     chartColor="#2563eb"
                   />
                 </div>
@@ -65,7 +65,7 @@ const DashboardPage = () => {
         <div className="grid grid-cols-12 gap-5">
           <div className="lg:col-span-8 col-span-12">
             <Card>
-              <CardContent className="p-4">
+              <CardContent className="p-4 font-montserrat">
                 <RevinueBarChart/>
               </CardContent>
             </Card>
@@ -73,7 +73,7 @@ const DashboardPage = () => {
           <div className="lg:col-span-4 col-span-12">
             <Card>
               <CardHeader className="flex flex-row items-center">
-                <CardTitle className="flex-1">
+                <CardTitle className="flex-1 font-montserrat">
                   {t("overview_circle_chart_title")}
                 </CardTitle>
                 <DashboardDropdown />
@@ -86,7 +86,7 @@ const DashboardPage = () => {
           <div className="lg:col-span-8 col-span-12">
             <Card>
               <CardHeader className="flex flex-row items-center">
-                <CardTitle className="flex-1">
+                <CardTitle className="flex-1 font-montserrat">
                   {t("company_table_title")}
                 </CardTitle>
                 <DashboardDropdown />
@@ -99,7 +99,7 @@ const DashboardPage = () => {
           <div className="lg:col-span-4 col-span-12">
             <Card>
               <CardHeader className="flex flex-row items-center">
-                <CardTitle className="flex-1">
+                <CardTitle className="flex-1 font-montserrat">
                   {t("recent_activity_table_title")}
                 </CardTitle>
                 <DashboardDropdown />
@@ -115,7 +115,7 @@ const DashboardPage = () => {
           <div className="lg:col-span-4 col-span-12">
             <Card>
               <CardHeader className="flex flex-row items-center">
-                <CardTitle className="flex-1">
+                <CardTitle className="flex-1 font-montserrat">
                   {t("overview_circle_chart_title")}
                 </CardTitle>
                 <DashboardDropdown />
@@ -124,31 +124,31 @@ const DashboardPage = () => {
                 <OverviewRadialChart />
                 <div className="bg-default-50 rounded p-4 mt-8 flex justify-between flex-wrap">
                   <div className="space-y-1">
-                    <h4 className="text-default-600  text-xs font-normal">
+                    <h4 className="text-default-600  text-xs font-normal font-montserrat">
                      {t("invested_amount")}
                     </h4>
-                    <div className="text-sm font-medium text-default-900">
+                    <div className="text-sm font-medium text-default-900 font-montserrat">
                       $8264.35
                     </div>
-                    <div className="text-default-500  text-xs font-normal">
+                    <div className="text-default-500  text-xs font-normal font-montserrat">
                       +0.001.23 (0.2%)
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <h4 className="text-default-600  text-xs font-normal">
+                    <h4 className="text-default-600  text-xs font-normal font-montserrat">
                      {t("invested_amount")}
                     </h4>
-                    <div className="text-sm font-medium text-default-900">
+                    <div className="text-sm font-medium text-default-900 font-montserrat">
                       $8264.35
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <h4 className="text-default-600  text-xs font-normal">
+                    <h4 className="text-default-600  text-xs font-normal font-montserrat">
                      {t("invested_amount")}
                     </h4>
-                    <div className="text-sm font-medium text-default-900">
+                    <div className="text-sm font-medium text-default-900 font-montserrat">
                       $8264.35
                     </div>
                   </div>

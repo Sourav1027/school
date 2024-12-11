@@ -22,7 +22,6 @@
     "last_months": "Last months",
     "last_year": "Last year"
   },
- 
   "Menu": {
     "dashboard": "Dashboard",
     "analytics": "Analytics",
@@ -31,15 +30,46 @@
     "school": "School",
     "student": "Student",
     "class": "class",
+    "subject": "subject",
     "section": "section",
     "division": "division",
     "batch": "batch",
-    "importstudentdata":"importstudentdata"
-   
+    "importstudentdata": "importstudentdata",
+    "master": "master",
+    "apps": "apps",
+    "Students": "Students",
+    "Utilities": "Utilities",
+    "homework": "homework",
+    "sms": "sms",
+    "notification": "notification",
+    "profile":"profile"
   },
   "Changelog": {
     "version": "Version's",
     "changelog": "CHANGELOG",
     "versionHistory": "VERSION HISTORY"
-  }
+  },
+  "dashboard": "dashboard",
+  "apps": "apps",
+  "role": "role",
+  "school": "school",
+  "teacher": "teacher",
+  "student": "student",
+  "importstudentdata": "importstudentdata",
+  "masters": "masters",
+  "batch": "batch",
+  "subject": "subject",
+  "division": "division",
+  "class": "class",
+  "master": "master",
+  "section": "section",
+  "students": "students",
+  "Students": "Students",
+  "Utilities": "Utilities",
+  "Notification": "Notification",
+  "homework": "homework",
+  "sms": "sms",
+  "notification": "notification",
+  "utilities": "utilities",
+  "profile": "profile"
 }

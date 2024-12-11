@@ -273,5 +273,6 @@
     "version": "النسخة",
     "changelog": "سجل التغيير",
     "versionHistory": "تاريخ النسخة"
-  }
+  },
+  "role": ""
 }

@@ -94,7 +94,7 @@ const AddClass: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) => {
                 }}
             >
                 <DialogHeader>
-                    <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+                    <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center gap-2 font-montserrat">
                         <div className="h-8 w-2 bg-green-500 rounded-full" />
                         Add New Class
                     </DialogTitle>
@@ -102,13 +102,13 @@ const AddClass: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) => {
 
                 <form onSubmit={handleSubmit} className="space-y-6 mt-4">
                     {error && (
-                        <Alert className="bg-red-50 text-red-900 border-red-200 transition-opacity duration-300">
+                        <Alert className="bg-red-50 text-red-900 border-red-200 transition-opacity duration-300 font-montserrat">
                             <AlertDescription>{error}</AlertDescription>
                         </Alert>
                     )}
 
                     <div className="space-y-2">
-                        <Label htmlFor="className" className="text-sm font-medium text-gray-700">
+                        <Label htmlFor="className" className="text-sm font-medium text-gray-700 font-montserrat">
                             Class Name
                         </Label>
                         <div className="relative">
@@ -117,7 +117,7 @@ const AddClass: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) => {
                                 id="className"
                                 value={name}
                                 onChange={(e) => setname(e.target.value)}
-                                className="pl-10 focus:ring-green-500 focus:border-green-500 text-black"
+                                className="pl-10 focus:ring-green-500 focus:border-green-500 text-black font-montserrat"
                                 placeholder="Enter Class name"
                                 disabled={loading}
                                 required
@@ -129,7 +129,7 @@ const AddClass: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) => {
                         <Button
                             type="submit"
                             disabled={loading}
-                            className="bg-green-500 hover:bg-green-600 text-white h-8 text-sm px-3 py-1"
+                            className="bg-green-500 hover:bg-green-600 text-white h-8 text-sm px-3 py-1 font-montserrat"
                         >
                             <Save className="w-4 h-4 mr-2" />
                             {loading ? 'Saving...' : 'Save Class'}
@@ -138,7 +138,7 @@ const AddClass: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) => {
                             type="button"
                             onClick={handleCancel}
                             disabled={loading}
-                            className="bg-red-500 hover:bg-red-600 text-white h-8 text-sm px-3 py-1"
+                            className="bg-red-500 hover:bg-red-600 text-white h-8 text-sm px-3 py-1 font-montserrat"
                         >
                             <X className="w-4 h-4 mr-2" />
                             Cancel

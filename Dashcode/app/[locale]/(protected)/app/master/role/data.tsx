@@ -71,11 +71,11 @@ interface TableData {
           <table className="w-full text-sm text-left text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
-                <th className="px-6 py-3">Serial No</th>
-                <th className="px-6 py-3">Role Name</th>
-                <th className="px-6 py-3">Status</th>
-                <th className="px-6 py-3">Date</th>
-                <th className="px-6 py-3">Action</th>
+                <th className="px-6 py-3 font-montserrat">Serial No</th>
+                <th className="px-6 py-3 font-montserrat">Role Name</th>
+                <th className="px-6 py-3 font-montserrat">Status</th>
+                <th className="px-6 py-3 font-montserrat">Date</th>
+                <th className="px-6 py-3 font-montserrat">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -83,17 +83,17 @@ interface TableData {
                 <tr>
                   <td colSpan={5} className="px-6 py-16 text-center">
                     <div className="flex flex-col items-center justify-center">
-                      <span className="text-gray-500 text-lg font-medium">No Data Found</span>
-                      <span className="text-gray-400 text-sm mt-1">There are no records to display</span>
+                      <span className="text-gray-500 text-lg font-medium font-montserrat">No Data Found</span>
+                      <span className="text-gray-400 text-sm mt-1 font-montserrat">There are no records to display</span>
                     </div>
                   </td>
                 </tr>
               ) : (
                 data.map((item: TableData, index: number) => (
                   <tr key={item.id} className="bg-white border-b hover:bg-gray-50">
-                    <td className="px-6 py-4">{index + 1}</td>
-                    <td className="px-6 py-4">{item.roleName}</td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 font-montserrat">{index + 1}</td>
+                    <td className="px-6 py-4 font-montserrat">{item.roleName}</td>
+                    <td className="px-6 py-4 font-montserrat">
                       <span className={`px-2 py-1 rounded-full text-xs ${
                         item.status === 'active' 
                           ? 'bg-green-100 text-green-800' 
@@ -102,7 +102,7 @@ interface TableData {
                         {item.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4">{new Date(item.date).toLocaleDateString()}</td>
+                    <td className="px-6 py-4 font-montserrat">{new Date(item.date).toLocaleDateString()}</td>
                     <td className="px-6 py-4">
                       <div className="flex space-x-3">
                         <button 

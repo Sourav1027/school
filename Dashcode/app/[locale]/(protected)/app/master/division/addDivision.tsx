@@ -16,22 +16,13 @@ interface AddClassProps {
     onSuccess?: () => void;
 }
 
-interface ClassOption {
-    txnId: string;  // Changed from id to txnId to match API response
-    name: string;
-}
-
 const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) => {
     const [divisionName, setDivisionName] = useState('');
-    const [selectedClassId, setSelectedClassId] = useState('');
-    const [classList, setClassList] = useState<ClassOption[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [isClosing, setIsClosing] = useState(false);
 
-    useEffect(() => {
-        fetchClassList();
-    }, []);
+
 
       // Add effect to clear error message after 3 seconds
       useEffect(() => {
@@ -48,39 +39,12 @@ const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) =>
         };
     }, [error]);
 
-    const fetchClassList = async () => {
-        const token = localStorage.getItem("auth_token");
-
-        try {
-            const response = await fetch(`${apiurl}v1/class`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                }
-            });
-            
-            if (!response.ok) {
-                throw new Error('Failed to fetch class');
-            }
-
-            const data = await response.json();
-            // Set the data array from the response to classList
-            setClassList(data.data);
-        } catch (err) {
-            setError('Failed to load class. Please try again.');
-        }
-    };
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
 
         if (!divisionName.trim()) {
             setError('Division name is required');
-            return;
-        }
-
-        if (!selectedClassId) {
-            setError('Please select a class');
             return;
         }
 
@@ -95,7 +59,6 @@ const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) =>
                 },
                 body: JSON.stringify({ 
                     name: divisionName.trim(),
-                    classId: selectedClassId 
                 })
             });
 
@@ -107,7 +70,6 @@ const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) =>
             }
 
             setDivisionName('');
-            setSelectedClassId('');
             onSuccess?.();
             onClose();
         } catch (err) {
@@ -122,7 +84,6 @@ const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) =>
         setTimeout(() => {
             setIsClosing(false);
             setDivisionName('');
-            setSelectedClassId('');
             setError('');
             onClose();
         }, 300);
@@ -142,7 +103,7 @@ const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) =>
                   }}
             >
                 <DialogHeader>
-                    <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+                    <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center gap-2 font-montserrat">
                         <div className="h-8 w-2 bg-green-500 rounded-full" />
                         Add New Division 
                     </DialogTitle>
@@ -150,32 +111,16 @@ const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) =>
 
                 <form onSubmit={handleSubmit} className="space-y-6 mt-4">
                     {error && (
-                        <Alert className="bg-red-50 text-red-900 border-red-200">
+                        <Alert className="bg-red-50 text-red-900 border-red-200 font-montserrat">
                             <AlertDescription>{error}</AlertDescription>
                         </Alert>
                     )}
 
                     <div className="space-y-4">
-                        <div className="space-y-2">
-                            <Label htmlFor="className" className="text-sm font-medium text-gray-700">
-                                Select Class
-                            </Label>
-                            <Select value={selectedClassId} onValueChange={setSelectedClassId}>
-                                <SelectTrigger className="w-full">
-                                    <SelectValue placeholder="Select a class" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {classList.map((classOption) => (
-                                        <SelectItem key={classOption.txnId} value={classOption.txnId}>
-                                            {classOption.name}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                        </div>
+                      
 
                         <div className="space-y-2">
-                            <Label htmlFor="className" className="text-sm font-medium text-gray-700">
+                            <Label htmlFor="className" className="text-sm font-medium text-gray-700 font-montserrat">
                                 Division Name
                             </Label>
                             <div className="relative">
@@ -184,7 +129,7 @@ const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) =>
                                     id="divisionName"
                                     value={divisionName}
                                     onChange={(e) => setDivisionName(e.target.value)}
-                                    className="pl-10 focus:ring-green-500 focus:border-green-500 text-black"
+                                    className="pl-10 focus:ring-green-500 focus:border-green-500 text-black font-montserrat"
                                     placeholder="Enter Division name"
                                     disabled={loading}
                                 />
@@ -196,7 +141,7 @@ const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) =>
                         <Button
                             type="submit"
                             disabled={loading}
-                            className="bg-green-500 hover:bg-green-600 text-white h-8 text-sm px-3 py-1"
+                            className="bg-green-500 hover:bg-green-600 text-white h-8 text-sm px-3 py-1 font-montserrat"
                         >
                             <Save className="w-4 h-4 mr-2" />
                             {loading ? 'Saving...' : 'Save Division'}
@@ -205,7 +150,7 @@ const AddDivision: React.FC<AddClassProps> = ({ isOpen, onClose, onSuccess }) =>
                             type="button"
                             onClick={handleClose}
                             disabled={loading}
-                            className="bg-red-500 hover:bg-red-600 text-white h-8 text-sm px-3 py-1"
+                            className="bg-red-500 hover:bg-red-600 text-white h-8 text-sm px-3 py-1 font-montserrat"
                         >
                             <X className="w-4 h-4 mr-2" />
                             Cancel

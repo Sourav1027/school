@@ -134,7 +134,7 @@ const Batch: React.FC = () => {
       {/* Header Section */}
       <div className="mb-2">
         <div className="flex justify-between items-center mb-2">
-          <h2 className="text-2xl font-bold text-gray-800">Batch Management</h2>
+          <h2 className="text-2xl font-bold text-gray-800 font-montserrat">Batch Management</h2>
           <div className="relative">
             <MagnifyingGlassIcon className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <Input
@@ -158,7 +158,7 @@ const Batch: React.FC = () => {
               </SelectContent>
             </Select>
             <Button
-              className="bg-green-500 hover:bg-green-600 text-white"
+              className="bg-green-500 hover:bg-green-600 text-white font-montserrat"
               onClick={handleAddBatch}
             >
               <PlusIcon className="w-4 h-4 mr-2" />
@@ -173,22 +173,22 @@ const Batch: React.FC = () => {
         <Table>
           <TableHeader>
             <TableRow className="bg-gray-50">
-              <TableHead className="w-[100px] text-center py-4 px-6 text-gray-700 font-semibold border-b border-r">Sr No </TableHead>
-              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r">Batch Name</TableHead>
-              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r">Passing Year </TableHead>
-              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r">School Open Date </TableHead>
-              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r">Create Date</TableHead>
-              <TableHead className="w-[100px] text-center py-4 px-6 text-gray-700 font-semibold border-b">Action</TableHead>
+              <TableHead className="w-[100px] text-center py-4 px-6 text-gray-700 font-semibold border-b border-r font-montserrat">Sr No </TableHead>
+              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r font-montserrat">Batch Name</TableHead>
+              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r font-montserrat">Passing Year </TableHead>
+              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r font-montserrat">School Open Date </TableHead>
+              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r font-montserrat">Create Date</TableHead>
+              <TableHead className="w-[100px] text-center py-4 px-6 text-gray-700 font-semibold border-b font-montserrat">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {loading ? (
               <TableRow>
-                <TableCell colSpan={4} className="text-center py-4">Loading... </TableCell>
+                <TableCell colSpan={4} className="text-center py-4 font-montserrat">Loading... </TableCell>
               </TableRow>
             ) : batch.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={4} className="text-center py-4">
+                <TableCell colSpan={4} className="text-center py-4 font-montserrat">
                   No batch found
                 </TableCell>
               </TableRow>
@@ -198,20 +198,20 @@ const Batch: React.FC = () => {
                   key={batch.id}
                   className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
                 >
-                  <TableCell className="py-4 px-6 text-center border-r font-medium text-gray-900">
+                  <TableCell className="py-4 px-6 text-center border-r font-medium text-gray-900 font-montserrat">
                     {(currentPage - 1) * parseInt(recordsPerPage) + index + 1}
                   </TableCell>
-                  <TableCell className="py-4 px-6 text-center border-r text-gray-700">{batch.name}</TableCell>
-                  <TableCell className="py-4 px-6 text-center border-r text-gray-700">{batch.passingYear}</TableCell>
-                  <TableCell className="py-4 px-6 text-center border-r text-gray-700">{batch.schoolOpenDate}</TableCell>
-                  <TableCell className="py-4 px-6 text-center border-r text-gray-700">{batch.createdAt}</TableCell>
+                  <TableCell className="py-4 px-6 text-center border-r text-gray-700 font-montserrat">{batch.name}</TableCell>
+                  <TableCell className="py-4 px-6 text-center border-r text-gray-700 font-montserrat">{batch.passingYear}</TableCell>
+                  <TableCell className="py-4 px-6 text-center border-r text-gray-700 font-montserrat">{batch.schoolOpenDate}</TableCell>
+                  <TableCell className="py-4 px-6 text-center border-r text-gray-700 font-montserrat">{batch.createdAt}</TableCell>
                   <TableCell className="py-4 px-6">
                     <div className="flex justify-center gap-2">
 
                       <Button
                         variant="outline"
                         size="sm"
-                        className="border-blue-200 hover:bg-blue-50 text-blue-600"
+                        className="border-blue-200 hover:bg-blue-50 text-blue-600 font-montserrat"
                         onClick={() => handleEditBatch(batch)}
                       >
                         <PencilIcon className="w-4 h-4" />
@@ -219,7 +219,7 @@ const Batch: React.FC = () => {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="border-red-200 hover:bg-red-50 text-red-600"
+                        className="border-red-200 hover:bg-red-50 text-red-600 font-montserrat"
                         onClick={() => handleDeleteBatch(batch.id)}
                       >
                         <TrashIcon className="w-4 h-4" />
@@ -235,7 +235,7 @@ const Batch: React.FC = () => {
 
       {/* Pagination Section */}
       <div className="mt-3 flex justify-between items-center">
-        <div className="text-sm text-gray-600">
+        <div className="text-sm text-gray-600 font-montserrat">
           Showing {Math.min((currentPage - 1) * parseInt(recordsPerPage) + 1, totalRecords)} to{' '}
           {Math.min(currentPage * parseInt(recordsPerPage), totalRecords)} of {totalRecords} entries
         </div>
@@ -243,7 +243,7 @@ const Batch: React.FC = () => {
           <Button
             variant="outline"
             disabled={currentPage === 1}
-            className="border-gray-200 text-gray-600"
+            className="border-gray-200 text-gray-600 font-montserrat"
             onClick={() => setCurrentPage(currentPage - 1)}
           >
             ← Previous
@@ -251,7 +251,7 @@ const Batch: React.FC = () => {
           {Array.from({ length: totalPages }, (_, i) => (
             <Button
               key={i}
-              className={i + 1 === currentPage ? 'bg-blue-500 text-white' : 'border-gray-200 text-gray-600'}
+              className={i + 1 === currentPage ? 'bg-blue-500 text-white' : 'border-gray-200 text-gray-600 font-montserrat'}
               onClick={() => setCurrentPage(i + 1)}
             >
               {i + 1}
@@ -260,7 +260,7 @@ const Batch: React.FC = () => {
           <Button
             variant="outline"
             disabled={currentPage === totalPages}
-            className="border-gray-200 text-gray-600"
+            className="border-gray-200 text-gray-600 font-montserrat"
             onClick={() => setCurrentPage(currentPage + 1)}
           >
             Next →

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Save, X, Calendar, BookOpen, GraduationCap } from 'lucide-react';
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import Loader from '../others/loader';
+import Loader from '../../others/loader';
 
 const apiurl = process.env.NEXT_PUBLIC_SITE_URL;
 
@@ -176,8 +176,8 @@ const AddBatch: React.FC<AddBatchProps> = ({ isOpen, onClose, onSuccess, selecte
                     <Alert
                         className={`mb-4 ${
                             alert.type === 'success' 
-                                ? 'bg-green-50 border-green-200 text-green-800' 
-                                : 'bg-red-50 border-red-200 text-red-800'
+                                ? 'bg-green-50 border-green-200 text-green-800 font-montserrat' 
+                                : 'bg-red-50 border-red-200 text-red-800 font-montserrat'
                         }`}
                     >
                         <AlertDescription>
@@ -187,7 +187,7 @@ const AddBatch: React.FC<AddBatchProps> = ({ isOpen, onClose, onSuccess, selecte
                 )}
                
                 <DialogHeader className="bg-gradient-to-r from-green-500 to-green-600 p-4 rounded-t-lg">
-                    <DialogTitle className="text-2xl font-bold text-white flex items-center gap-2">
+                    <DialogTitle className="text-2xl font-bold text-white flex items-center gap-2 font-montserrat">
                         <BookOpen className="w-6 h-6" />
                         {selectedBatch ? 'Update Batch' : 'Add New Batch'}
                     </DialogTitle>
@@ -195,7 +195,7 @@ const AddBatch: React.FC<AddBatchProps> = ({ isOpen, onClose, onSuccess, selecte
 
                 <form onSubmit={handleSubmit} className="space-y-6 mt-4">
                     <div className="space-y-2">
-                        <Label htmlFor="className" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                        <Label htmlFor="className" className="text-sm font-medium text-gray-700 flex items-center gap-2 font-montserrat">
                             <Calendar className="w-4 h-4 text-green-500" />
                             Batch Name
                         </Label>
@@ -204,7 +204,7 @@ const AddBatch: React.FC<AddBatchProps> = ({ isOpen, onClose, onSuccess, selecte
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
-                            className="focus:ring-green-500 focus:border-green-500"
+                            className="focus:ring-green-500 focus:border-green-500 font-montserrat"
                             placeholder="e.g., YYYY-YYYY"
                             disabled={loading}
                             required
@@ -212,7 +212,7 @@ const AddBatch: React.FC<AddBatchProps> = ({ isOpen, onClose, onSuccess, selecte
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="passingYear" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                        <Label htmlFor="passingYear" className="text-sm font-medium text-gray-700 flex items-center gap-2 font-montserrat">
                             <GraduationCap className="w-4 h-4 text-green-500" />
                             Passing Year
                         </Label>
@@ -221,7 +221,7 @@ const AddBatch: React.FC<AddBatchProps> = ({ isOpen, onClose, onSuccess, selecte
                             name="passingYear"
                             value={formData.passingYear}
                             onChange={handleChange}
-                            className="focus:ring-green-500 focus:border-green-500"
+                            className="focus:ring-green-500 focus:border-green-500 font-montserrat"
                             placeholder="e.g., YYYY"
                             disabled={loading}
                             required
@@ -229,7 +229,7 @@ const AddBatch: React.FC<AddBatchProps> = ({ isOpen, onClose, onSuccess, selecte
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="schoolOpenDate" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                        <Label htmlFor="schoolOpenDate" className="text-sm font-medium text-gray-700 flex items-center gap-2 font-montserrat">
                             <Calendar className="w-4 h-4 text-green-500" />
                             School Open Date
                         </Label>
@@ -239,7 +239,7 @@ const AddBatch: React.FC<AddBatchProps> = ({ isOpen, onClose, onSuccess, selecte
                             type="date"
                             value={formData.schoolOpenDate}
                             onChange={handleChange}
-                            className="focus:ring-green-500 focus:border-green-500"
+                            className="focus:ring-green-500 focus:border-green-500 font-montserrat"
                             disabled={loading}
                             required
                         />
@@ -249,7 +249,7 @@ const AddBatch: React.FC<AddBatchProps> = ({ isOpen, onClose, onSuccess, selecte
                         <Button
                             type="submit"
                             disabled={loading}
-                            className="bg-green-500 hover:bg-green-600 text-white h-8 text-sm px-3 py-1"
+                            className="bg-green-500 hover:bg-green-600 text-white h-8 text-sm px-3 py-1 font-montserrat"
                         >
                             <Save className="w-4 h-4 mr-2" />
                             {loading ? 'Saving...' : selectedBatch ? 'Update Batch' : 'Save Batch'}
@@ -258,7 +258,7 @@ const AddBatch: React.FC<AddBatchProps> = ({ isOpen, onClose, onSuccess, selecte
                             type="button"
                             onClick={handleClose}
                             disabled={loading}
-                            className="bg-red-500 hover:bg-red-600 text-white h-8 text-sm px-3 py-1"
+                            className="bg-red-500 hover:bg-red-600 text-white h-8 text-sm px-3 py-1 font-montserrat"
                         >
                             <X className="w-4 h-4 mr-2" />
                             Cancel

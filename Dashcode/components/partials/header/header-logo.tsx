@@ -4,6 +4,7 @@ import { Link } from '@/components/navigation'
 import DashCodeLogo from "@/components/dascode-logo"
 import { useConfig } from '@/hooks/use-config'
 import { useMediaQuery } from '@/hooks/use-media-query'
+import Logo from "@/components/partials/auth/logo";
 
 const HeaderLogo = () => {
     const [config] = useConfig();

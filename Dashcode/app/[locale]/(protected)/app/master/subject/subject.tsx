@@ -7,18 +7,21 @@ import { Button } from '@/components/ui/button';
 import { PlusIcon, MagnifyingGlassIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Swal from 'sweetalert2';
-import AddClass from './addClass';
+import AddSubject from './addsubject';
 
 const apiurl = process.env.NEXT_PUBLIC_SITE_URL;
 
-interface Class {
+interface Subject {
   id: number;
   name: string;
+  abbreviation: string;
+  subjectType: string;
+  markingType: string;
   createdAt: string;
 }
 
-const Class: React.FC = () => {
-  const [classes, setClasses] = useState<Class[]>([]); // Renamed from `class` to `classes`
+const Subject: React.FC = () => {
+  const [subjects, setsubjects] = useState<Subject[]>([]); // Renamed from `class` to `subjects`
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -34,7 +37,7 @@ const Class: React.FC = () => {
   };
 
   // Fetch classes data
-  const fetchClasses = async (
+  const fetchSubjects = async (
     page: number = 1,
     limit: number = 5,
     query: string = ''
@@ -42,7 +45,7 @@ const Class: React.FC = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `${apiurl}v1/class?page=${page}&limit=${limit}&search=${query}`,
+        `${apiurl}v1/subject?page=${page}&limit=${limit}&search=${query}`,
         {
           method: 'GET',
           headers: headers,
@@ -57,21 +60,24 @@ const Class: React.FC = () => {
       const formattedData = data.data.map((item: any) => ({
         id: item.txnId,
         name: item.name,
+        abbreviation: item.abbreviation,
+        subjectType: item.subjectType,
+        markingType: item.markingType,
         createdAt: item.createdAt,
       }));
 
-      setClasses(formattedData);
+      setsubjects(formattedData);
       setTotalRecords(data.total); // Set total records for pagination
     } catch (error) {
-      console.error('Error fetching classes:', error);
-      Swal.fire('Error', 'Failed to fetch classes', 'error');
+      console.error('Error fetching subjects:', error);
+      Swal.fire('Error', 'Failed to fetch subjects', 'error');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchClasses(currentPage, parseInt(recordsPerPage), searchQuery);
+    fetchSubjects(currentPage, parseInt(recordsPerPage), searchQuery);
   }, [currentPage, recordsPerPage, searchQuery]);
 
   const handleAddClass = () => {
@@ -80,10 +86,10 @@ const Class: React.FC = () => {
 
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
-    fetchClasses(currentPage, parseInt(recordsPerPage), searchQuery); // Refresh after adding
+    fetchSubjects(currentPage, parseInt(recordsPerPage), searchQuery); // Refresh after adding
   };
 
-  const handleDeleteClass = async (classId: number) => {
+  const handleDeleteClass = async (subjectId: number) => {
     const result = await Swal.fire({
       title: 'Are you sure?',
       text: 'Do you really want to delete this class?',
@@ -95,14 +101,14 @@ const Class: React.FC = () => {
 
     if (result.isConfirmed) {
       try {
-        const response = await fetch(`${apiurl}v1/class/${classId}`, {
+        const response = await fetch(`${apiurl}v1/Subject/${subjectId}`, {
           method: 'DELETE',
           headers: headers,
         });
 
         if (response.ok) {
           Swal.fire('Deleted!', 'The class has been deleted.', 'success');
-          fetchClasses(currentPage, parseInt(recordsPerPage), searchQuery); // Refresh after deletion
+          fetchSubjects(currentPage, parseInt(recordsPerPage), searchQuery); // Refresh after deletion
         } else {
           throw new Error('Failed to delete class');
         }
@@ -120,7 +126,7 @@ const Class: React.FC = () => {
       {/* Header Section */}
       <div className="mb-2">
         <div className="flex justify-between items-center mb-2">
-          <h2 className="text-2xl font-bold text-gray-800">Class Management</h2>
+          <h2 className="text-2xl font-bold text-gray-800 font-montserrat">Subject List</h2>
           <div className="relative">
             <MagnifyingGlassIcon className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <Input
@@ -143,9 +149,9 @@ const Class: React.FC = () => {
                 <SelectItem value="20">20 records per page</SelectItem>
               </SelectContent>
             </Select>
-            <Button className="bg-green-500 hover:bg-green-600 text-white" onClick={handleAddClass}>
+            <Button className="bg-green-500 hover:bg-green-600 text-white font-montserrat" onClick={handleAddClass}>
               <PlusIcon className="w-4 h-4 mr-2" />
-              Add Class
+              Add Subject
             </Button>
           </div>
         </div>
@@ -156,41 +162,41 @@ const Class: React.FC = () => {
         <Table>
           <TableHeader>
             <TableRow className="bg-gray-50">
-              <TableHead className="w-[100px] text-center py-4 px-6 text-gray-700 font-semibold border-b border-r">Sr No </TableHead>
-              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r">Class Name</TableHead>
-              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r">Create Date</TableHead>
-              <TableHead className="w-[100px] text-center py-4 px-6 text-gray-700 font-semibold border-b">Action</TableHead>
+              <TableHead className="w-[100px] text-center py-4 px-6 text-gray-700 font-semibold border-b border-r font-montserrat">Sr No </TableHead>
+              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r font-montserrat">Subject Name</TableHead>
+              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r font-montserrat">Abbreviation</TableHead>
+              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r font-montserrat">Subject Type</TableHead>
+              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r font-montserrat">Marking Type</TableHead>
+              <TableHead className="py-4 text-center px-6 text-gray-700 font-semibold border-b border-r font-montserrat">Create Date</TableHead>
+              <TableHead className="w-[100px] text-center py-4 px-6 text-gray-700 font-semibold border-b font-montserrat">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {loading ? (
               <TableRow>
-                <TableCell colSpan={4} className="text-center py-4">Loading...</TableCell>
+                <TableCell colSpan={4} className="text-center py-4 font-montserrat">Loading...</TableCell>
               </TableRow>
-            ) : classes.length === 0 ? (
+            ) : subjects.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={4} className="text-center py-4">No class found</TableCell>
+                <TableCell colSpan={7} className="text-center py-4 font-montserrat">No Subject found</TableCell>
               </TableRow>
             ) : (
-              classes.map((classItem, index) => (
-                <TableRow key={classItem.id} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                  <TableCell className="py-4 px-6 text-center border-r font-medium text-gray-900">
+              subjects.map((subjectItem, index) => (
+                <TableRow key={subjectItem.id} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                  <TableCell className="py-4 px-6 text-center border-r  text-gray-700 font-montserrat">
                     {(currentPage - 1) * parseInt(recordsPerPage) + index + 1}
                   </TableCell>
-                  <TableCell className="py-4 px-6 text-center border-r text-gray-700 ">
-                  <div className="flex justify-center items-center">
-                  <span className='bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium'>
-                       Class {classItem.name}
-                      </span>
-                    </div>
-                 </TableCell>
-                  <TableCell className="py-4 px-6 text-center border-r text-gray-700">{classItem.createdAt}</TableCell>
-                  <TableCell className="py-4 px-6">
+                  <TableCell className="py-4 px-6 text-center border-r  text-gray-700 font-montserrat">{subjectItem.name} </TableCell>
+                  <TableCell className="py-4 px-6 text-center border-r text-gray-700 font-montserrat">{subjectItem.abbreviation} </TableCell>
+                  <TableCell className="py-4 px-6 text-center border-r text-gray-700 font-montserrat">{subjectItem.subjectType} </TableCell>
+                  <TableCell className="py-4 px-6 text-center border-r text-gray-700 font-montserrat">{subjectItem.markingType} </TableCell>
+                  <TableCell className="py-4 px-6 text-center border-r text-gray-700 font-montserrat">{subjectItem.createdAt}</TableCell>
+                  <TableCell className="py-4 px-6 font-montserrat">
                     <Button
                       variant="outline"
                       size="sm"
-                      className="border-red-200 hover:bg-red-50 text-red-600"
-                      onClick={() => handleDeleteClass(classItem.id)}
+                      className="border-red-200 hover:bg-red-50 text-red-600 font-montserrat"
+                      onClick={() => handleDeleteClass(subjectItem.id)}
                     >
                       <TrashIcon className="w-4 h-4" />
                     </Button>
@@ -204,7 +210,7 @@ const Class: React.FC = () => {
 
       {/* Pagination Section */}
       <div className="mt-3 flex justify-between items-center">
-        <div className="text-sm text-gray-600">
+        <div className="text-sm text-gray-600 font-montserrat">
           Showing {Math.min((currentPage - 1) * parseInt(recordsPerPage) + 1, totalRecords)} to{' '}
           {Math.min(currentPage * parseInt(recordsPerPage), totalRecords)} of {totalRecords} entries
         </div>
@@ -212,7 +218,7 @@ const Class: React.FC = () => {
           <Button
             variant="outline"
             disabled={currentPage === 1}
-            className="border-gray-200 text-gray-600"
+            className="border-gray-200 text-gray-600 font-montserrat"
             onClick={() => setCurrentPage(currentPage - 1)}
           >
             ← Previous
@@ -220,7 +226,7 @@ const Class: React.FC = () => {
           {Array.from({ length: totalPages }, (_, i) => (
             <Button
               key={i}
-              className={i + 1 === currentPage ? 'bg-blue-500 text-white' : 'border-gray-200 text-gray-600'}
+              className={i + 1 === currentPage ? 'bg-blue-500 text-white' : 'border-gray-200 text-gray-600 font-montserrat'}
               onClick={() => setCurrentPage(i + 1)}
             >
               {i + 1}
@@ -229,7 +235,7 @@ const Class: React.FC = () => {
           <Button
             variant="outline"
             disabled={currentPage === totalPages}
-            className="border-gray-200 text-gray-600"
+            className="border-gray-200 text-gray-600 font-montserrat"
             onClick={() => setCurrentPage(currentPage + 1)}
           >
             Next →
@@ -238,9 +244,9 @@ const Class: React.FC = () => {
       </div>
 
       {/* Add Class Dialog */}
-      <AddClass isOpen={isDialogOpen} onClose={handleCloseDialog} />
+      <AddSubject isOpen={isDialogOpen} onClose={handleCloseDialog} />
     </div>
   );
 };
 
-export default Class;
+export default Subject;

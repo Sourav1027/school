@@ -130,11 +130,11 @@ const DialogFormOpen: React.FC<DialogFormOpenProps> = ({ isOpen, onClose }) => {
  <AlertDialogContent
     className="absolute top-0 left-0 right-0 mx-auto max-w-4xl h-auto p-6 overflow-y-auto bg-white shadow-lg rounded-lg"
     style={{ marginTop: '0px', transform: 'none' }}> 
-       <AlertDialogTitle className="h-2 mb-4">Add Role</AlertDialogTitle>
+       <AlertDialogTitle className="h-2 mb-4 font-montserrat">Add Role</AlertDialogTitle>
         <AlertDialogDescription>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="roleName" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="roleName" className="block text-sm font-medium text-gray-700 font-montserrat">
                 Role Name
               </label>
               <Input
@@ -142,7 +142,7 @@ const DialogFormOpen: React.FC<DialogFormOpenProps> = ({ isOpen, onClose }) => {
                 type="text"
                 value={roleName}
                 onChange={handleRoleNameChange}
-                className="w-1/4 mt-1 border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                className="w-1/4 mt-1 border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 font-montserrat"
                 placeholder="Enter role name"
               />
             </div>
@@ -150,11 +150,11 @@ const DialogFormOpen: React.FC<DialogFormOpenProps> = ({ isOpen, onClose }) => {
               <table className="min-w-full bg-white border border-gray-300">
                 <thead>
                   <tr>
-                    <th className="px-4 py-2 border-b text-left">Module</th>
-                    <th className="px-4 py-2 border-b text-left">SubModule</th>
-                    <th className="px-4 py-2 border-b text-center">Read</th>
-                    <th className="px-4 py-2 border-b text-center">Write</th>
-                    <th className="px-4 py-2 border-b text-center">All</th>
+                    <th className="px-4 py-2 border-b text-left font-montserrat">Module</th>
+                    <th className="px-4 py-2 border-b text-left font-montserrat">SubModule</th>
+                    <th className="px-4 py-2 border-b text-center font-montserrat">Read</th>
+                    <th className="px-4 py-2 border-b text-center font-montserrat">Write</th>
+                    <th className="px-4 py-2 border-b text-center font-montserrat">All</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -165,12 +165,12 @@ const DialogFormOpen: React.FC<DialogFormOpenProps> = ({ isOpen, onClose }) => {
                           {subModuleIndex === 0 && (
                             <td
                               rowSpan={module.subModules.length}
-                              className="px-4 py-2 font-medium border-b text-left"
+                              className="px-4 py-2 font-medium border-b text-left font-montserrat"
                             >
                               {module.name}
                             </td>
                           )}
-                          <td className="px-4 py-2 border-b text-left">{subModule.name}</td>
+                          <td className="px-4 py-2 border-b text-left font-montserrat">{subModule.name}</td>
                           <td className="px-4 py-2 border-b text-center">
                             <Checkbox
                               checked={subModule.permissions.read}
@@ -211,7 +211,7 @@ const DialogFormOpen: React.FC<DialogFormOpenProps> = ({ isOpen, onClose }) => {
             <div className="mt-4 flex justify-end">
               <Button
                 type="button"
-                className="bg-red-600 hover:bg-red-800 text-white font-medium rounded-lg mr-2"
+                className="bg-red-600 hover:bg-red-800 text-white font-medium rounded-lg mr-2 font-montserrat"
                 onClick={() => {
                   onClose();
                   resetForm(); // Reset form on cancel
@@ -222,7 +222,7 @@ const DialogFormOpen: React.FC<DialogFormOpenProps> = ({ isOpen, onClose }) => {
               </Button>
               <Button
                 type="submit"
-                className="bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg"
+                className="bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg font-montserrat"
               >
                 <Save className="mr-2 h-5 w-5" />
                 Save

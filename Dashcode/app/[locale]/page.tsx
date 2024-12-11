@@ -37,8 +37,8 @@ const Login = ({ params: { locale } }: { params: { locale: string } }) => {
                   </Link>
                 </div>
                 <div className="text-center 2xl:mb-5 mb-2">
-                  <h4 className="font-medium">Sign in</h4>
-                  <div className="text-default-500 text-base">
+                  <h4 className="font-medium font-montserrat">Sign in</h4>
+                  <div className="text-default-500 text-base font-montserrat">
                     Sign in to your account
                   </div>
                 </div>
@@ -46,17 +46,17 @@ const Login = ({ params: { locale } }: { params: { locale: string } }) => {
                 <div className="relative border-b-[#9AA2AF] border-opacity-[16%] border-b pt-6">
                  
                 </div>
-                <div className="md:max-w-[345px] mx-auto font-normal text-default-500 mt-12 uppercase text-sm">
+                <div className="md:max-w-[345px] mx-auto font-normal text-default-500 mt-12 uppercase text-sm font-montserrat">
                   Don’t have an account?{" "}
                   <Link
                     href="/auth/register"
-                    className="text-default-900  font-medium hover:underline text-blue"
+                    className="text-default-900  font-medium hover:underline text-blue font-montserrat"
                   >
                     Sign up
                   </Link>
                 </div>
               </div>
-              <div className="text-xs font-normal text-default-500  z-[999] pb-10 text-center">
+              <div className="text-xs font-normal text-default-500  z-[999] pb-10 text-center font-montserrat">
                 <Copyright />
               </div>
             </div>

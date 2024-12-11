@@ -170,7 +170,7 @@ const CompanyTable = () => {
             <TableRow>
               <TableCell
                 colSpan={columns.length}
-                className="h-24 text-center"
+                className="h-24 text-center font-montserrat"
               >
                 No results.
               </TableCell>
@@ -184,7 +184,7 @@ const CompanyTable = () => {
           size="icon"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
-          className='w-8 h-8'
+          className='w-8 h-8 font-montserrat'
         >
           <ChevronLeft className='w-4 h-4' />
         </Button>
@@ -193,7 +193,7 @@ const CompanyTable = () => {
             key={`basic-data-table-${pageIndex}`}
             onClick={() => table.setPageIndex(pageIndex)}
             size="icon"
-            className="w-8 h-8"
+            className="w-8 h-8 font-montserrat"
             variant={table.getState().pagination.pageIndex === pageIndex ? 'default' : 'outline'}
           >
             {page + 1}
@@ -205,7 +205,7 @@ const CompanyTable = () => {
           size="icon"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
-          className='w-8 h-8'
+          className='w-8 h-8 font-montserrat'
         >
           <ChevronRight className='w-4 h-4' />
         </Button>

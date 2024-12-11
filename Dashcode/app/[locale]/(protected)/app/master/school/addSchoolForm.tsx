@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Building2, Hash, Phone, Mail, User, GraduationCap, Save, X, Home, Building, Map, MapPinned, Navigation, PenTool } from 'lucide-react';
 import AlertTitle from '@mui/material/AlertTitle';
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import Loader from '../others/loader';
+import Loader from '../../others/loader';
 
 
 const apiurl = process.env.NEXT_PUBLIC_SITE_URL;
@@ -280,7 +280,7 @@ const AddSchoolForm: React.FC<SchoolFormProps> = ({
                     </Alert>
                 )}
                 <DialogHeader>
-                    <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+                    <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center gap-2 font-montserrat">
                         <div className="h-8 w-2 bg-green-500 rounded-full" />
                         {selectedSchool ? 'Update School' : 'Add New School'}
                     </DialogTitle>
@@ -294,7 +294,7 @@ const AddSchoolForm: React.FC<SchoolFormProps> = ({
                             <Input
                                 {...register('schoolCode', { required: true })}
                                 placeholder="School Code"
-                                className="pl-10"
+                                className="pl-10 font-montserrat"
                             />
                         </div>
                         <div className="relative">
@@ -302,7 +302,7 @@ const AddSchoolForm: React.FC<SchoolFormProps> = ({
                             <Input
                                 {...register('name', { required: true })}
                                 placeholder="School Name"
-                                className="pl-10"
+                                className="pl-10 font-montserrat"
                             />
                         </div>
                     </div>
@@ -314,7 +314,7 @@ const AddSchoolForm: React.FC<SchoolFormProps> = ({
                             <Input
                                 {...register('principleName', { required: true })}
                                 placeholder="Principal Name"
-                                className="pl-10"
+                                className="pl-10 font-montserrat"
                             />
                         </div>
                         <div className="relative">
@@ -322,7 +322,7 @@ const AddSchoolForm: React.FC<SchoolFormProps> = ({
                             <Input
                                 {...register('principleSign', { required: true })}
                                 placeholder="Principal Signature"
-                                className="pl-10"
+                                className="pl-10 font-montserrat"
                             />
                         </div>
                     </div>
@@ -338,7 +338,7 @@ const AddSchoolForm: React.FC<SchoolFormProps> = ({
                                 })}
                                 type="text"
                                 placeholder="Contact Number"
-                                className="pl-10"
+                                className="pl-10 font-montserrat"
                                 maxLength={10}
                                 onInput={handleNumberInput}
                             />
@@ -352,7 +352,7 @@ const AddSchoolForm: React.FC<SchoolFormProps> = ({
                                 })}
                                 type="text"
                                 placeholder="Landline Number"
-                                className="pl-10"
+                                className="pl-10 font-montserrat"
                                 maxLength={10}
                                 onInput={handleNumberInput}
                             />
@@ -367,7 +367,7 @@ const AddSchoolForm: React.FC<SchoolFormProps> = ({
                                 })}
                                 type="email"
                                 placeholder="Email"
-                                className="pl-10"
+                                className="pl-10 font-montserrat"
                             />
                         </div>
                     </div>
@@ -409,43 +409,43 @@ const AddSchoolForm: React.FC<SchoolFormProps> = ({
                             <Input
                                 {...register('state', { required: true })}
                                 placeholder="State Name"
-                                className="pl-10"
+                                className="pl-10 font-montserrat"
                             />
                         </div>
                     </div>
 
                     {/* Correspondence Address */}
                     <div className="space-y-4 p-4 border rounded-lg">
-                        <h3 className="font-semibold mb-4 flex items-center">
+                        <h3 className="font-semibold mb-4 flex items-center font-montserrat">
                             <Home className="h-4 w-4 mr-2" />
                             Correspondence Address
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div className="relative">
                                 <Building className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                <Input {...register('address.0.add1')} placeholder="Addressadd 1" className="pl-10" />
+                                <Input {...register('address.0.add1')} placeholder="Addressadd 1" className="pl-10 font-montserrat" />
                             </div>
                             <div className="relative">
                                 <Building className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                <Input {...register('address.0.add2')} placeholder="Addressadd 2" className="pl-10" />
+                                <Input {...register('address.0.add2')} placeholder="Addressadd 2" className="pl-10 font-montserrat" />
                             </div>
                             <div className="relative">
                                 <Building className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                <Input {...register('address.0.add3')} placeholder="Addressadd 3" className="pl-10" />
+                                <Input {...register('address.0.add3')} placeholder="Addressadd 3" className="pl-10 font-montserrat" />
                             </div>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div className="relative">
                                 <MapPinned className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                <Input {...register('address.0.city')} placeholder="City" className="pl-10" />
+                                <Input {...register('address.0.city')} placeholder="City" className="pl-10 font-montserrat" />
                             </div>
                             <div className="relative">
                                 <Map className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                <Input {...register('address.0.state')} placeholder="State" className="pl-10" />
+                                <Input {...register('address.0.state')} placeholder="State" className="pl-10 font-montserrat" />
                             </div>
                             <div className="relative">
                                 <Navigation className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                                <Input {...register('address.0.pincode')} placeholder="Pincode" className="pl-10" />
+                                <Input {...register('address.0.pincode')} placeholder="Pincode" className="pl-10 font-montserrat" />
                             </div>
                         </div>
                     </div>
@@ -457,14 +457,14 @@ const AddSchoolForm: React.FC<SchoolFormProps> = ({
                             checked={sameAsCorrespondence}
                             onCheckedChange={handleCheckboxChange}
                         />
-                        <label htmlFor="sameAddress" className="text-sm font-medium leading-none">
+                        <label htmlFor="sameAddress" className="text-sm font-medium leading-none font-montserrat">
                             Permanent address same as correspondence address
                         </label>
                     </div>
 
                     {/* Permanent Address */}
                     <div className="space-y-4 p-4 border rounded-lg">
-                        <h3 className="font-semibold mb-4 flex items-center">
+                        <h3 className="font-semibold mb-4 flex items-center font-montserrat">
                             <Home className="h-4 w-4 mr-2" />
                             Permanent Address
                         </h3>
@@ -474,7 +474,7 @@ const AddSchoolForm: React.FC<SchoolFormProps> = ({
                                 <Input
                                     {...register('address.1.add1')}
                                     placeholder="Addressadd 1"
-                                    className="pl-10"
+                                    className="pl-10 font-montserrat"
                                     disabled={sameAsCorrespondence}
                                 />
                             </div>
@@ -483,7 +483,7 @@ const AddSchoolForm: React.FC<SchoolFormProps> = ({
                                 <Input
                                     {...register('address.1.add2')}
                                     placeholder="Addressadd 2"
-                                    className="pl-10"
+                                    className="pl-10 font-montserrat"
                                     disabled={sameAsCorrespondence}
                                 />
                             </div>
@@ -492,7 +492,7 @@ const AddSchoolForm: React.FC<SchoolFormProps> = ({
                                 <Input
                                     {...register('address.1.add3')}
                                     placeholder="Addressadd 3"
-                                    className="pl-10"
+                                    className="pl-10 font-montserrat"
                                     disabled={sameAsCorrespondence}
                                 />
                             </div>
@@ -503,7 +503,7 @@ const AddSchoolForm: React.FC<SchoolFormProps> = ({
                                 <Input
                                     {...register('address.1.city')}
                                     placeholder="City"
-                                    className="pl-10"
+                                    className="pl-10 font-montserrat"
                                     disabled={sameAsCorrespondence}
                                 />
                             </div>
@@ -512,7 +512,7 @@ const AddSchoolForm: React.FC<SchoolFormProps> = ({
                                 <Input
                                     {...register('address.1.state')}
                                     placeholder="State"
-                                    className="pl-10"
+                                    className="pl-10 font-montserrat"
                                     disabled={sameAsCorrespondence}
                                 />
                             </div>
@@ -521,7 +521,7 @@ const AddSchoolForm: React.FC<SchoolFormProps> = ({
                                 <Input
                                     {...register('address.1.pincode')}
                                     placeholder="Pincode"
-                                    className="pl-10"
+                                    className="pl-10 font-montserrat"
                                     disabled={sameAsCorrespondence}
                                 />
                             </div>
@@ -532,7 +532,7 @@ const AddSchoolForm: React.FC<SchoolFormProps> = ({
                         <Button
                             type="submit"
                             disabled={loading}
-                            className="bg-green-600 hover:bg-green-700 h-8 text-sm px-3 py-1"
+                            className="bg-green-600 hover:bg-green-700 h-8 text-sm px-3 py-1 font-montserrat"
                         >
                             <Save className="w-4 h-4 mr-2" />
                             {loading ? 'Saving...' : selectedSchool ? 'Update School' : 'Save School'}
@@ -541,7 +541,7 @@ const AddSchoolForm: React.FC<SchoolFormProps> = ({
                             type="button"
                             disabled={loading}
                             onClick={handleClose}
-                            className="bg-red-600 hover:bg-red-700 text-white h-8 text-sm px-3 py-1"
+                            className="bg-red-600 hover:bg-red-700 text-white h-8 text-sm px-3 py-1 font-montserrat"
                         >
                             <X className="w-4 h-4 mr-2" />
                             Cancel

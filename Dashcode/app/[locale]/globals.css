@@ -1,11 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
+    --font-family: 'Montserrat', sans-serif; /* Add Montserrat font */
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
@@ -88,6 +91,7 @@
 
     --background: 222.2 47.4% 11.2%;
     --foreground: 210 40% 98%;
+    --font-family: 'Montserrat', sans-serif; /* Add Montserrat font */
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
@@ -185,7 +189,8 @@
   }
 
   body {
-    @apply text-foreground;
+      @apply text-foreground;
+      font-family: var('Montserrat', sans-serif);
   }
 
   .input-group :not(:first-child) input {
