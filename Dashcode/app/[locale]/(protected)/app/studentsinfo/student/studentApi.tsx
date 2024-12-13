@@ -15,7 +15,7 @@ export const StudentService = {
     async createStudent(studentData: StudentData) {
         try {
             const token = localStorage.getItem('auth_token');
-            const response = await axios.post(`${apiUrl}v1/student`, studentData, {
+            const response = await axios.post(`${apiUrl}v1/students`, studentData, {
                 headers: { 
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ export const StudentService = {
     async getStudentById(studentId: string) {
         try {
             const token = localStorage.getItem('auth_token');
-            const response = await axios.get(`${apiUrl}v1/student/${studentId}`, {
+            const response = await axios.get(`${apiUrl}v1/students/${studentId}`, {
                 headers: { 
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'

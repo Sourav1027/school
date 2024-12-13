@@ -35,7 +35,7 @@ const CustomDatePicker = ({
         <PopoverTrigger asChild>
           <input
             type="text"
-            value={value ? format(value, 'PPP') : ''}
+            value={value && !isNaN(value.getTime()) ? format(value, 'PPP') : ''}
             onChange={(e) => onChange(e.target.value ? new Date(e.target.value) : undefined)}
             placeholder={label}
             className={cn(
