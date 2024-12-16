@@ -65,7 +65,7 @@ const LoginForm: React.FC = () => {
         return;
       }
       
-      const token = result.token;
+      const token = result.jwt;
       if (!token) {
         throw new Error("Token is missing from the API response");
       }
